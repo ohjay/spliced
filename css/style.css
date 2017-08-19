@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'futura-lt';
+  src: url('../fonts/Futura LT Light.ttf');
+}
+
+@font-face {
+  font-family: 'futura-lt';
+  src: url('../fonts/Futura LT.ttf');
+  font-weight: bold;
+}
+
+b {
+  font-weight: bold;
+}
+
+body {
+  background: url('../images/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: futura-lt, sans-serif;
+}
+
+h1 {
+  font-size: 50px;
+  color: white;
+}
+
+#title {
+  width: 600px;
+  height: 211px;
+  object-fit: cover;
+  margin-top: 6px;
+  margin-left: 26.75%;
+}
