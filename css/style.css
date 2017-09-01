@@ -115,6 +115,7 @@ td#images-td-right {
   opacity: 1.0;
   cursor: pointer;
   border-radius: 3px;
+  transition: all 0.15s ease-in-out;
 }
 
 #animal-selection img:hover {

@@ -27,14 +27,14 @@
     <div class="column">
       <div id="instructions">
         <b>Instructions:</b> (a) Upload a picture of yourself, or take one with your webcam.<br />
-        (b) Position the markers in the left image to match their counterparts in the right image.<br />
+        (b) Position the markers in the left image to match their counterparts in the right image. <a href="#TODO">(Example)</a><br />
         (c) Select a morph percentage.
       </div>
     </div>
 
     <table id="images"><tr>
       <td id="images-td-left">
-        <img src="images/src/chimpanzee.jpg" class="bordered" />
+        <img src="images/src/chimpanzee.jpg" class="bordered" id="img-from" />
         <figcaption align="middle">
           <label for="upload" class="pure-button top-sm right-sm" id="button-upload">Upload image</label>
           <input type="file" id="upload" />
@@ -42,7 +42,7 @@
         </figcaption>
       </td>
       <td id="images-td-right">
-        <img src="images/src/chimpanzee.jpg" class="bordered" />
+        <img src="images/src/chimpanzee.jpg" class="bordered" id="img-to" />
         <figcaption align="middle" id="animal-selection">
           <img src="images/src_small/cat.jpg" />
           <img src="images/src_small/chimpanzee.jpg" />
@@ -80,6 +80,11 @@
   </div>
 
   <!-- Scripts -->
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/delaunay.min.js"></script>
+  <script src="js/math.min.js"></script>
+  <script src="js/cropper.min.js"></script>
+  <script src="js/const.js"></script>
   <script src="js/facemorphing.js"></script>
   <script src="js/main.js"></script>
 </body>

@@ -6,9 +6,7 @@
  * contains only the core morphing functionality.
  */
 
-// TODO: There are probably a lot of undefined references in the below functions.
-
-function addCornerPoints(id) {
+function addCornerPoints(points, id) {
   var img = document.getElementById(id);
   points[id].push([0, 0]);
   points[id].push([0, img.clientHeight - 1]);
@@ -32,44 +30,16 @@ function getMidpoints(pointsFrom, pointsTo, t) {
   return midpoints;
 }
 
-function runTriangulation(corners=true, render=true) {
+function runTriangulation(points, warpFrac, corners=true) {
   // Add the corner points before triangulating
   if (corners) {
-    addCornerPoints(ID_IMG_FROM);
-    addCornerPoints(ID_IMG_TO);
+    addCornerPoints(points, ID_IMG_FROM);
+    addCornerPoints(points, ID_IMG_TO);
   }
   
   var midpoints = getMidpoints(points[ID_IMG_FROM], points[ID_IMG_TO], warpFrac);
-  var tri = Delaunay.triangulate(midpoints);
-  
-  if (render) {
-    renderTriangulation(tri, document.getElementById(ID_CVS_FROM), points[ID_IMG_FROM]);
-    renderTriangulation(tri, document.getElementById(ID_CVS_TO),   points[ID_IMG_TO]);
-  }
-  
-  return [midpoints, tri];
-}
-
-function renderTriangulation(triangles, cvs, points) {
-  var ctx = cvs.getContext('2d');
-  
-  var idx0, idx1, idx2;
-  var point0, point1, point2;
-  for (var i = 0; i < triangles.length; i += 3) {
-    idx0 = triangles[i], idx1 = triangles[i + 1], idx2 = triangles[i + 2];
-    point0 = points[idx0], point1 = points[idx1], point2 = points[idx2];
-    
-    ctx.beginPath();
-    ctx.moveTo(point0[0], point0[1]);
-    ctx.lineTo(point1[0], point1[1]);
-    ctx.lineTo(point2[0], point2[1]);
-    ctx.closePath();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#0000ff';
-    ctx.stroke();
-  }
-
-  cvs.style.display = 'inline'; // show canvas
+  var triangles = Delaunay.triangulate(midpoints);
+  return [midpoints, triangles];
 }
 
 /*
@@ -110,8 +80,6 @@ function triangleInterior(triangle) {
 /*
  * Returns a number whose value is limited to the given range.
  * Example: (x * 255).clip(0, 255)
- *
- * Source: http://stackoverflow.com/a/11409944
  */
 Number.prototype.clip = function(min, max) {
   return Math.min(Math.max(this, min), max);
@@ -164,20 +132,14 @@ function bilerp(x, y, img, width, height) {
  * The weights are given by the T0 and T1 parameters.
  */
 function colorPixel(data, idx, src0Color, src1Color, t0, t1) {
-  if (WARP_SINGLE >= 0) {
-    data[idx]     = !WARP_SINGLE ? src0Color[0] : src1Color[0];
-    data[idx + 1] = !WARP_SINGLE ? src0Color[1] : src1Color[1];
-    data[idx + 2] = !WARP_SINGLE ? src0Color[2] : src1Color[2];
-  } else {
-    data[idx]     = (src0Color[0] * t0 + src1Color[0] * t1).clip(0, 255);
-    data[idx + 1] = (src0Color[1] * t0 + src1Color[1] * t1).clip(0, 255);
-    data[idx + 2] = (src0Color[2] * t0 + src1Color[2] * t1).clip(0, 255);
-  }
+  data[idx]     = (src0Color[0] * t0 + src1Color[0] * t1).clip(0, 255);
+  data[idx + 1] = (src0Color[1] * t0 + src1Color[1] * t1).clip(0, 255);
+  data[idx + 2] = (src0Color[2] * t0 + src1Color[2] * t1).clip(0, 255);
   data[idx + 3] = 255;
 }
 
 /*
- * Determines the midpoint image, then renders it on CVS (a canvas).
+ * Computes and returns a pixel array representing the morphed image.
  */
 function computeMidpointImage(midpoints, triangles, fromPts, toPts, cvs, df0, df1) {
   var idx0, idx1, idx2;
@@ -231,7 +193,7 @@ function computeMidpointImage(midpoints, triangles, fromPts, toPts, cvs, df0, df
     }
   }
   
-  // Clean up holes
+  // Patch holes
   var numPixels = width * height * 4;
   for (i = 3; i < numPixels; i += 4) {
     if (finalData[i] == 0) {
@@ -258,10 +220,6 @@ function computeMidpointImage(midpoints, triangles, fromPts, toPts, cvs, df0, df
       }
     }
   }
-
-  // Turn final image pixels into an actual image
-  fillOutputCanvas(finalData, cvs, width, height);
-  if (SHOW_OUTPUT_TRIANGULATION) {
-    renderTriangulation(triangles, cvs, midpoints);
-  }
+  
+  return finalData;
 }
