@@ -77,6 +77,14 @@ td#images-td-right {
   margin-top: 10px !important;
 }
 
+.top-20 {
+  margin-top: 20px !important;
+}
+
+.go-space {
+  margin-bottom: 10px;
+}
+
 #title {
   width: 600px;
   height: 211px;
@@ -111,4 +119,9 @@ td#images-td-right {
 
 #animal-selection img:hover {
   opacity: 0.6;
+}
+
+#go-label {
+  font-size: 1.1em;
+  line-height: 1.6em;
 }
