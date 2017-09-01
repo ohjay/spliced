@@ -17,7 +17,11 @@
 </head>
 <body>
   <div class="wrapper">
-    <img src="images/title.webp" id="title" />
+    <picture>
+      <source srcset="images/title.webp" type="image/webp">
+      <source srcset="images/small_title.jpg" type="image/jpeg"> 
+      <img src="images/small_title.jpg" id="title">
+    </picture>
     <h1>Splice Yourself</h1>
 
     <div class="column">
@@ -30,9 +34,9 @@
       <td id="images-td-left">
         <img src="images/src/chimpanzee.jpg" class="bordered" />
         <figcaption align="middle">
-          <label for="upload-from" class="pure-button top-sm right-sm" id="button-upload">Upload image</label>
+          <label for="upload" class="pure-button top-sm right-sm" id="button-upload">Upload image</label>
           <input type="file" id="upload" />
-          <button class="pure-button top-sm" id="camera-btn">Toggle camera</button>
+          <button class="pure-button top-sm" id="camera-btn">Take picture</button>
         </figcaption>
       </td>
       <td id="images-td-right">
