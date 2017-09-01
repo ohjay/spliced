@@ -7,9 +7,10 @@
   <title>Splice Yourself &middot; Spliced</title>
 
   <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
   <link href="css/reset.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-  
+
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
@@ -17,10 +18,60 @@
 <body>
   <div class="wrapper">
     <img src="images/_title.webp" id="title" />
-    <h1 style="margin-left: 37%">Splice Yourself</h1>
+    <h1>Splice Yourself</h1>
+
+    <div class="column">
+      <div id="instructions">
+        <b>Instructions:</b> (a) Upload a picture of yourself, or take one with a webcam. (b) Move the markers in the left image to positions that match their counterparts in the right image. (c) Select a morph percentage.
+      </div>
+    </div>
+
+    <table id="images"><tr>
+      <td id="images-td-left">
+        <img src="images/src/chimpanzee.jpg" class="bordered" />
+        <figcaption align="middle">
+          <label for="upload-from" class="pure-button top-sm right-sm" id="button-upload">Upload image</label>
+          <input type="file" id="upload" />
+          <button class="pure-button top-sm" id="camera-btn">Toggle camera</button>
+        </figcaption>
+      </td>
+      <td id="images-td-right">
+        <img src="images/src/chimpanzee.jpg" class="bordered" />
+        <figcaption align="middle" id="animal-selection">
+          <img src="images/src_small/cat.jpg" />
+          <img src="images/src_small/chimpanzee.jpg" />
+          <img src="images/src_small/dog1.jpg" />
+          <img src="images/src_small/eagle.jpg" />
+          <img src="images/src_small/giraffe.jpg" />
+          <img src="images/src_small/owl.jpg" />
+          <img src="images/src_small/pigeon.jpg" />
+          <img src="images/src_small/polar_bear.jpg" />
+          <img src="images/src_small/raccoon.jpg" />
+          <img src="images/src_small/ram.jpg" />
+          <img src="images/src_small/salamander1.jpg" />
+          <img src="images/src_small/snow_leopard.jpg" />
+          <img src="images/src_small/squirrel.jpg" />
+          <img src="images/src_small/tiger.jpg" />
+        </figcaption>
+      </td>
+    </tr></table>
+
+    <div class="column tac top-10">
+      <button class="pure-button pure-button-primary">5%</button>
+      <button class="pure-button pure-button-primary">10%</button>
+      <button class="pure-button pure-button-primary">15%</button>
+      <button class="pure-button pure-button-primary">50%</button>
+    </div>
+
+    <div class="column tac top-10">
+      <a href="https://www.spliced.world/">back to main site</a>
+    </div>
+    
+    <div id="closing-space"></div>
   </div>
 
   <!-- Scripts -->
   <script src="js/facemorphing.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
