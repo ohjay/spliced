@@ -86,6 +86,10 @@ td#images-td-right {
   display: block;
 }
 
+#instructions {
+  line-height: 1.35em;
+}
+
 #animal-selection {
   padding: 1px;
 }
