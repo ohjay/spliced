@@ -191,6 +191,14 @@ function setupAnimalSelection() {
 function setupImageSwitching() {
   $('#' + ID_CHANGE_IMG_BTN).click(function(evt) {
     // Basically de-confirm the image
+    // Deactivate GO buttons
+    var container = document.getElementById(ID_GO_CONTAINER);
+    var buttons = container.getElementsByTagName('button');
+    var i;
+    for (i = 0; i < buttons.length; ++i) {
+      $(buttons[i]).addClass('pure-button-disabled');
+    }
+    
     // Remove markers and re-enable upload/camera buttons
     removeAllMarkers();
     $('#' + ID_CHANGE_IMG_BTN).css('display', 'none');
@@ -215,6 +223,14 @@ function setupImageConfirm() {
     // Create "to" points
     points[ID_IMG_TO] = [];
     drawPointsFromFile(ID_IMG_TO, DEFAULT_POINTS_FILEPATH);
+    
+    // Activate GO buttons
+    var container = document.getElementById(ID_GO_CONTAINER);
+    var buttons = container.getElementsByTagName('button');
+    var i;
+    for (i = 0; i < buttons.length; ++i) {
+      $(buttons[i]).removeClass('pure-button-disabled');
+    }
   });
 }
 
