@@ -316,6 +316,9 @@ function setupGoButtons() {
             target: '#' + ID_OUTPUT_MODAL
           }
         }).open();
+        console.log('#' + ID_DOWNLOAD);
+        console.log('---');
+        console.log(cvs.toDataURL('image/png'));
         $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png'));
       } else {
         // morph failed
