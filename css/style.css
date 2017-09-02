@@ -98,6 +98,13 @@ td#images-td-right {
   border: 5px groove #ba8258;
 }
 
+.marker {
+  display: none;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+
 #title {
   width: 600px;
   height: 211px;

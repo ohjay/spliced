@@ -18,6 +18,14 @@ function findPosition(elt) {
   return [elt.x, elt.y];
 }
 
+function createMarker(id, markerSrc) {
+  var img = document.createElement('img');
+  img.setAttribute('src', markerSrc);
+  img.setAttribute('class', 'marker');
+  img.setAttribute('id', id);
+  return img;
+}
+
 /*
  * Draw markers for an already-existent array of points.
  */
