@@ -6,6 +6,7 @@ var activeAnimal = null;
 var currMarkerId = 0;
 var points       = {};
 var inv          = {}; // marker ID # --> index in respective `points` array
+var relevCtx, relevWidth, relevHeight, relevMarkerNo, relevPos;
 
 function findPosition(elt) {
   if (typeof(elt.offsetParent) != 'undefined') {
@@ -46,6 +47,23 @@ function drawMarkers(id, imgPos) {
     inv[currMarkerId] = i;
     ++currMarkerId;
   }
+}
+
+function overlay(elemId, imageId) {
+  var elem   = $('#' + elemId);
+  var img    = document.getElementById(imageId);
+  var imgPos = findPosition(img);
+  
+  elem.css('position', 'absolute');
+  elem.css('left',   imgPos[0] + 'px');
+  elem.css('top',    imgPos[1] + 'px');
+  elem.css('width',  img.clientWidth + 'px');
+  elem.css('height', img.clientHeight + 'px');
+}
+
+function setupCanvases() {
+  overlay(ID_CVS_FROM, ID_IMG_FROM);
+  overlay(ID_CVS_TO, ID_IMG_TO);
 }
 
 function setupImageUploads() {
@@ -142,8 +160,6 @@ function setupImageConfirm() {
       for (var i = 0; i < positions.length; ++i) {
         points[ID_IMG_FROM].push(positions[i]);
       }
-      console.log(positions.length); // TODO remove
-      console.log('---'); // TODO remove
       
       // Left side points
       points[ID_IMG_FROM].push([0.75 * positions[0][0], positions[0][1]]);
@@ -179,9 +195,7 @@ function setupMarkers() {
       return;
     }
 
-    var canvasId = ID_CVS_FROM;
-    relevCtx = document.getElementById(canvasId).getContext('2d');
-
+    relevCtx = document.getElementById(ID_CVS_FROM).getContext('2d');
     var relevImg = document.getElementById(ID_IMG_FROM);
     relevWidth  = relevImg.clientWidth;
     relevHeight = relevImg.clientHeight;
@@ -219,6 +233,7 @@ function setupMarkers() {
 }
 
 $(window).on('load', function() {
+  setupCanvases();
   setupImageUploads();
   setupAnimalSelection();
   setupImageConfirm();

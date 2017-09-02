@@ -150,3 +150,7 @@ td#images-td-right {
   font-size: 1.1em;
   line-height: 1.6em;
 }
+
+#canvas-from, #canvas-to {
+  display: none;
+}
