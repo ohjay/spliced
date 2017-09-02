@@ -105,6 +105,10 @@ td#images-td-right {
   height: 10px;
 }
 
+.orange {
+  background: rgb(223, 117, 20);
+}
+
 #title {
   width: 600px;
   height: 211px;
@@ -131,13 +135,8 @@ td#images-td-right {
   display: none;
 }
 
-#confirm-crop {
+#confirm-crop, #change-image {
   display: none;
-}
-
-#change-image {
-  display: none;
-  background: rgb(223, 117, 20);
 }
 
 #animal-selection img {
