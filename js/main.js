@@ -7,6 +7,7 @@ var currMarkerId = 0;
 var points       = {};
 var inv          = {}; // marker ID # --> index in respective `points` array
 var relevCtx, relevWidth, relevHeight, relevMarkerNo, relevPos;
+var cropper;
 
 function findPosition(elt) {
   if (typeof(elt.offsetParent) != 'undefined') {
