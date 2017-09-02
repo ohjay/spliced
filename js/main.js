@@ -49,14 +49,14 @@ function drawMarkers(id, imgPos) {
   }
 }
 
-function overlay(elemId, imageId) {
+function overlay(elemId, imageId, borderSize=0) {
   var elem   = $('#' + elemId);
   var img    = document.getElementById(imageId);
   var imgPos = findPosition(img);
   
   elem.css('position', 'absolute');
-  elem.css('left',   imgPos[0] + 'px');
-  elem.css('top',    imgPos[1] + 'px');
+  elem.css('left',   (imgPos[0] + borderSize) + 'px');
+  elem.css('top',    (imgPos[1] + borderSize) + 'px');
   elem.css('width',  img.clientWidth + 'px');
   elem.css('height', img.clientHeight + 'px');
 }
@@ -101,8 +101,8 @@ function fillOutputCanvas(finalData, cvs, width, height) {
 }
 
 function setupCanvases() {
-  overlay(ID_CVS_FROM, ID_IMG_FROM);
-  overlay(ID_CVS_TO, ID_IMG_TO);
+  overlay(ID_CVS_FROM, ID_IMG_FROM, BORDER_SIZE);
+  overlay(ID_CVS_TO, ID_IMG_TO, BORDER_SIZE);
 }
 
 function setupImageUploads() {

@@ -20,3 +20,4 @@ const DEFAULT_POINTS_FILEPATH = 'data/default.min.json';
 const MARKER_DIR    = 'images/markers/';
 const MARKER_CYCLE  = ['gold.png', 'blue.png', 'green.png',
                        'red.png', 'purple.png', 'white.png'];
+const BORDER_SIZE   = 5;
