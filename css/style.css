@@ -18,6 +18,10 @@ a {
   text-decoration: none;
 }
 
+img {
+  max-width: 100%;
+}
+
 body {
   background: url('../images/background.jpg');
   background-size: cover;
@@ -85,6 +89,10 @@ td#images-td-right {
   margin-bottom: 10px;
 }
 
+.animal-active {
+  opacity: 0.2 !important;
+}
+
 #title {
   width: 600px;
   height: 211px;
@@ -108,6 +116,10 @@ td#images-td-right {
 
 #upload {
   visibility: hidden;
+  display: none;
+}
+
+#confirm-crop {
   display: none;
 }
 

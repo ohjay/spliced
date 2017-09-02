@@ -9,6 +9,7 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
   <link href="css/reset.css" rel="stylesheet">
+  <link href="css/cropper.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
 
   <!--[if lt IE 9]>
@@ -34,8 +35,11 @@
 
     <table id="images"><tr>
       <td id="images-td-left">
-        <img src="images/src/chimpanzee.jpg" class="bordered" id="img-from" />
+        <div id="container-img-from">
+          <img src="images/src/chimpanzee.jpg" class="bordered" id="img-from" />
+        </div>
         <figcaption align="middle">
+          <button class="pure-button top-sm right-sm" id="confirm-crop">Confirm crop</button>
           <label for="upload" class="pure-button top-sm right-sm" id="button-upload">Upload image</label>
           <input type="file" id="upload" />
           <button class="pure-button top-sm" id="camera-btn">Take picture</button>
@@ -45,7 +49,7 @@
         <img src="images/src/chimpanzee.jpg" class="bordered" id="img-to" />
         <figcaption align="middle" id="animal-selection">
           <img src="images/src_small/cat.jpg" />
-          <img src="images/src_small/chimpanzee.jpg" />
+          <img src="images/src_small/chimpanzee.jpg" class="animal-active" />
           <img src="images/src_small/dog1.jpg" />
           <img src="images/src_small/eagle.jpg" />
           <img src="images/src_small/giraffe.jpg" />
