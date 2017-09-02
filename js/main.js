@@ -308,10 +308,12 @@ function setupGoButtons() {
       var midpoints = mtData[0], triangles = mtData[1];
       
       var cvs = document.getElementById(ID_CVS_FROM); // TODO make new canvas
-      var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
-          points[ID_IMG_FROM], points[ID_IMG_TO], cvs, magnitude, 1.0 - magnitude);
       var toImg = document.getElementById(ID_IMG_TO);
-      fillOutputCanvas(morph, cvs, toImg.clientWidth, toImg.clientHeight);
+      var width = toImg.clientWidth, height = toImg.clientHeight;
+      var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
+          points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
+          magnitude, 1.0 - magnitude);
+      fillOutputCanvas(morph, cvs, width, height);
       // document.getElementById(ID_IMG_DL_LINK).href = canvasTo.toDataURL('image/png'); // TODO
       // markerMagic = 0; getRidOfAllOfTheMarkers(); // TODO
     }
