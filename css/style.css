@@ -135,6 +135,11 @@ td#images-td-right {
   display: none;
 }
 
+#change-image {
+  display: none;
+  background: rgb(223, 117, 20);
+}
+
 #animal-selection img {
   opacity: 1.0;
   cursor: pointer;

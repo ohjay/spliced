@@ -50,6 +50,13 @@ function drawMarkers(id, imgPos) {
   }
 }
 
+function removeAllMarkers() {
+  while (currMarkerId > 0) {
+    var markerElt = document.getElementById('marker' + --currMarkerId);
+    document.body.removeChild(markerElt);
+  }
+}
+
 function overlay(elemId, imageId, borderSize=0) {
   var elem   = $('#' + elemId);
   var img    = document.getElementById(imageId);
@@ -181,12 +188,24 @@ function setupAnimalSelection() {
   }
 }
 
+function setupImageSwitching() {
+  $('#' + ID_CHANGE_IMG_BTN).click(function(evt) {
+    // Basically de-confirm the image
+    // Remove markers and re-enable upload/camera buttons
+    removeAllMarkers();
+    $('#' + ID_CHANGE_IMG_BTN).css('display', 'none');
+    $('#' + ID_CONFIRM_IMG_BTN).css('display', 'inline-block');
+    $('#' + ID_TAKE_PICTURE_BTN).removeClass('pure-button-disabled');
+    $('#' + ID_UPLOAD_BTN).removeClass('pure-button-disabled');
+  });
+}
+
 function setupImageConfirm() {
   $('#' + ID_CONFIRM_IMG_BTN).click(function(evt) {
     $('#' + ID_UPLOAD_BTN).addClass('pure-button-disabled');
     $('#' + ID_TAKE_PICTURE_BTN).addClass('pure-button-disabled');
-    $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
-    // TODO remove confirm button, add restart button
+    $('#' + ID_CONFIRM_IMG_BTN).css('display', 'none');
+    $('#' + ID_CHANGE_IMG_BTN).css('display', 'inline-block');
 
     // Create "from" points
     points[ID_IMG_FROM] = [];
@@ -270,6 +289,7 @@ function setupGoButtons() {
         // TODO do something (make them reposition points?)
       }
       fillOutputCanvas(morph, cvs, width, height);
+      // TODO display in popup
       // document.getElementById(ID_IMG_DL_LINK).href = canvasTo.toDataURL('image/png'); // TODO
       // markerMagic = 0; getRidOfAllOfTheMarkers(); // TODO
     }
@@ -280,6 +300,7 @@ $(window).on('load', function() {
   setupCanvases();
   setupImageUploads();
   setupAnimalSelection();
+  setupImageSwitching();
   setupImageConfirm();
   setupGoButtons();
 });
