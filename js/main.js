@@ -61,6 +61,19 @@ function overlay(elemId, imageId) {
   elem.css('height', img.clientHeight + 'px');
 }
 
+function unnormalize(points, width, height) {
+  return points.map(elt => [elt[0] * width, elt[1] * height]);
+}
+
+function importPoints(id, filepath) {
+  $.getJSON(filepath, function(data) {
+    var fromImg = document.getElementById(ID_IMG_FROM);
+    points[id] = unnormalize(data.points, fromImg.clientWidth, fromImg.clientHeight);
+    var imgPos = findPosition(document.getElementById(id));
+    drawMarkers(id, [imgPos[0], imgPos[1]]);
+  });
+}
+
 function setupCanvases() {
   overlay(ID_CVS_FROM, ID_IMG_FROM);
   overlay(ID_CVS_TO, ID_IMG_TO);
@@ -155,8 +168,7 @@ function setupImageConfirm() {
     points[ID_IMG_FROM] = [];
     $.getJSON(DEFAULT_POINTS_FILEPATH, function(data) {
       var fromImg = document.getElementById(ID_IMG_FROM);
-      var width = fromImg.clientWidth, height = fromImg.clientHeight;
-      var positions = data.points.map(elt => [elt[0] * width, elt[1] * height]);
+      var positions = unnormalize(data.points, fromImg.clientWidth, fromImg.clientHeight);
       for (var i = 0; i < positions.length; ++i) {
         points[ID_IMG_FROM].push(positions[i]);
       }
@@ -177,11 +189,37 @@ function setupImageConfirm() {
 
       // Draw the markers
       drawMarkers(ID_IMG_FROM, findPosition(img));
-      setupMarkers();
+      setupMarkers(); // make the markers draggable
     });
     
     // Create "to" points
     points[ID_IMG_TO] = [];
+    // TODO: importPoints(ID_IMG_TO, 'TODO-PATH-JSON-TO');
+    // TODO this is temporary (load the same default points)
+    $.getJSON(DEFAULT_POINTS_FILEPATH, function(data) {
+      var toImg = document.getElementById(ID_IMG_TO);
+      var positions = unnormalize(data.points, toImg.clientWidth, toImg.clientHeight);
+      for (var i = 0; i < positions.length; ++i) {
+        points[ID_IMG_TO].push(positions[i]);
+      }
+      
+      // Left side points
+      points[ID_IMG_TO].push([0.75 * positions[0][0], positions[0][1]]);
+      points[ID_IMG_TO].push([0.75 * positions[0][0], positions[2][1]]);
+      // Right side points
+      var img = document.getElementById(ID_IMG_TO);
+      var rdx = 0.25 * (img.clientWidth - positions[14][0]);
+      points[ID_IMG_TO].push([rdx + positions[14][0], positions[14][1]]);
+      points[ID_IMG_TO].push([rdx + positions[14][0], positions[12][1]]);
+      // Top points
+      points[ID_IMG_TO].push([positions[19][0], 0.30 * positions[19][1]]);
+      points[ID_IMG_TO].push([positions[22][0], 0.25 * positions[22][1]]);
+      points[ID_IMG_TO].push([positions[18][0], 0.25 * positions[18][1]]);
+      points[ID_IMG_TO].push([positions[15][0], 0.30 * positions[15][1]]);
+
+      // Draw the markers
+      drawMarkers(ID_IMG_TO, findPosition(img));
+    });
   });
 }
 
