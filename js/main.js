@@ -120,6 +120,8 @@ function setupAnimalSelection() {
 function setupImageConfirm() {
   $('#' + ID_CONFIRM_IMG_BTN).click(function(evt) {
     $.getJSON(DEFAULT_POINTS_FILEPATH, function(data) {
+      var fromImg = document.getElementById(ID_IMG_FROM);
+      var width = fromImg.clientWidth, height = fromImg.clientHeight;
       var positions = data.points.map(elt => [elt[0] * width, elt[1] * height]);
       points = {ID_IMG_FROM: [], ID_IMG_TO: []};
       for (var i = 0; i < positions.length; ++i) {
