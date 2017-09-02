@@ -102,7 +102,7 @@ function fillOutputCanvas(finalData, cvs, width, height) {
   var imgData = ctx.createImageData(width, height);
   imgData.data.set(new Uint8ClampedArray(finalData));
   ctx.putImageData(imgData, 0, 0);
-  cvs.style.display = 'inline'; // show canvas
+  cvs.style.display = 'block'; // show canvas
 }
 
 function setupCanvases() {
