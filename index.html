@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
   <link href="css/reset.css" rel="stylesheet">
   <link href="css/cropper.min.css" rel="stylesheet">
+  <link href="css/custombox.min.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
 
   <!--[if lt IE 9]>
@@ -89,11 +90,18 @@
     <div id="closing-space"></div>
   </div>
 
+  <div id="output-modal">
+    <canvas id="canvas-out"></canvas>
+    <a class="pure-button pure-button-primary" href="#" id="download">Download</a>
+  </div>
+
   <!-- Scripts -->
   <script src="js/jquery-3.2.1.min.js"></script>
   <script src="js/delaunay.min.js"></script>
   <script src="js/math.min.js"></script>
   <script src="js/cropper.min.js"></script>
+  <script src="js/custombox.min.js"></script>
+  <script src="js/custombox.legacy.min.js"></script>
   <script src="js/const.js"></script>
   <script src="js/facemorphing.js"></script>
   <script src="js/main.js"></script>

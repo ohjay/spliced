@@ -278,20 +278,25 @@ function setupGoButtons() {
       var mtData = runTriangulation(points, 1.0 - magnitude);
       var midpoints = mtData[0], triangles = mtData[1];
       
-      var cvs = document.getElementById(ID_CVS_FROM); // TODO make new canvas
+      var cvs = document.getElementById(ID_CVS_OUT);
       var toImg = document.getElementById(ID_IMG_TO);
       var width = toImg.clientWidth, height = toImg.clientHeight;
       var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
           points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
           1.0 - magnitude, magnitude);
-      if (!morph) {
+      if (morph) {
+        fillOutputCanvas(morph, cvs, width, height);
+        new Custombox.modal({
+          content: {
+            effect: 'fadein',
+            target: '#' + ID_OUTPUT_MODAL
+          }
+        }).open();
+        document.getElementById(ID_DOWNLOAD).href = cvs.toDataURL('image/png');
+      } else {
         // morph failed
         // TODO do something (make them reposition points?)
       }
-      fillOutputCanvas(morph, cvs, width, height);
-      // TODO display in popup
-      // document.getElementById(ID_IMG_DL_LINK).href = canvasTo.toDataURL('image/png'); // TODO
-      // markerMagic = 0; getRidOfAllOfTheMarkers(); // TODO
     }
   }
 }
