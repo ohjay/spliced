@@ -92,9 +92,6 @@ function fillOutputCanvas(finalData, cvs, width, height) {
   
   var ctx = cvs.getContext('2d');
   var imgData = ctx.createImageData(width, height);
-  console.log(finalData.length);
-  console.log('---');
-  console.log(width + ', ' + height);
   imgData.data.set(new Uint8ClampedArray(finalData));
   ctx.putImageData(imgData, 0, 0);
   cvs.style.display = 'inline'; // show canvas
@@ -257,7 +254,7 @@ function setupGoButtons() {
       var fromData = getImageData(document.getElementById(ID_IMG_FROM)).data;
       var toData = getImageData(document.getElementById(ID_IMG_TO)).data;
 
-      magnitude = parseInt(this.innerText.slice(0, -1));
+      magnitude = parseInt(this.innerText.slice(0, -1)) / 100.0;
       var mtData = runTriangulation(points, magnitude);
       var midpoints = mtData[0], triangles = mtData[1];
       
