@@ -4,6 +4,7 @@
 
 var activeAnimal = null;
 var currMarkerId = 0;
+var points       = {};
 var inv          = {}; // marker ID # --> index in respective `points` array
 
 function findPosition(elt) {
@@ -119,11 +120,12 @@ function setupAnimalSelection() {
 
 function setupImageConfirm() {
   $('#' + ID_CONFIRM_IMG_BTN).click(function(evt) {
+    // Create "from" points
+    points[ID_IMG_FROM] = [];
     $.getJSON(DEFAULT_POINTS_FILEPATH, function(data) {
       var fromImg = document.getElementById(ID_IMG_FROM);
       var width = fromImg.clientWidth, height = fromImg.clientHeight;
       var positions = data.points.map(elt => [elt[0] * width, elt[1] * height]);
-      points = {ID_IMG_FROM: [], ID_IMG_TO: []};
       for (var i = 0; i < positions.length; ++i) {
         points[ID_IMG_FROM].push(positions[i]);
       }
@@ -148,6 +150,9 @@ function setupImageConfirm() {
       drawMarkers(ID_IMG_FROM, findPosition(img));
       setupMarkers();
     });
+    
+    // Create "to" points
+    points[ID_IMG_TO] = [];
   });
 }
 
