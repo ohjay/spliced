@@ -74,6 +74,17 @@ function importPoints(id, filepath) {
   });
 }
 
+function fillOutputCanvas(finalData, cvs, width, height) {
+  cvs.width = width;
+  cvs.height = height;
+  
+  var ctx = cvs.getContext('2d');
+  var imgData = ctx.createImageData(width, height);
+  imgData.data.set(new Uint8ClampedArray(finalData));
+  ctx.putImageData(imgData, 0, 0);
+  cvs.style.display = 'inline'; // show canvas
+}
+
 function setupCanvases() {
   overlay(ID_CVS_FROM, ID_IMG_FROM);
   overlay(ID_CVS_TO, ID_IMG_TO);
@@ -270,9 +281,34 @@ function setupMarkers() {
   document.onmouseup   = finishMarkerAdjustment;
 }
 
+function setupGoButtons() {
+  var container = document.getElementById(ID_GO_CONTAINER);
+  var buttons = container.getElementsByTagName('button');
+  var i, magnitude;
+  for (i = 0; i < buttons.length; ++i) {
+    buttons[i].onclick = function() {
+      var fromData = getImageData(document.getElementById(ID_IMG_FROM)).data;
+      var toData = getImageData(document.getElementById(ID_IMG_TO)).data;
+
+      magnitude = parseInt(this.innerText.slice(0, -1));
+      var mtData = runTriangulation(points, magnitude);
+      var midpoints = mtData[0], triangles = mtData[1];
+      
+      var cvs = document.getElementById(ID_CVS_FROM); // TODO make new canvas
+      var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
+          points[ID_IMG_FROM], points[ID_IMG_TO], cvs, magnitude, 1.0 - magnitude);
+      var toImg = document.getElementById(ID_IMG_TO);
+      fillOutputCanvas(morph, cvs, toImg.clientWidth, toImg.clientHeight);
+      // document.getElementById(ID_IMG_DL_LINK).href = canvasTo.toDataURL('image/png'); // TODO
+      // markerMagic = 0; getRidOfAllOfTheMarkers(); // TODO
+    }
+  }
+}
+
 $(window).on('load', function() {
   setupCanvases();
   setupImageUploads();
   setupAnimalSelection();
   setupImageConfirm();
+  setupGoButtons();
 });

@@ -141,7 +141,8 @@ function colorPixel(data, idx, src0Color, src1Color, t0, t1) {
 /*
  * Computes and returns a pixel array representing the morphed image.
  */
-function computeMidpointImage(midpoints, triangles, fromPts, toPts, cvs, df0, df1) {
+function computeMidpointImage(midpoints, triangles, fromData, toData,
+    fromPts, toPts, cvs, df0, df1) {
   var idx0, idx1, idx2;
   var fromTri, toTri, targetTri;
   var X0, X1, Y, A0, A1;

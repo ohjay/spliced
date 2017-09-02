@@ -14,6 +14,7 @@ const ID_CONFIRM_CROP_BTN = 'confirm-crop';
 const ID_CONFIRM_IMG_BTN  = 'confirm-image';
 const ID_TAKE_PICTURE_BTN = 'take-picture';
 const ID_ANIMAL_SELECTION = 'animal-selection';
+const ID_GO_CONTAINER     = 'go-buttons';
 
 const DEFAULT_POINTS_FILEPATH = 'data/default.min.json';
 const MARKER_DIR    = 'images/markers/';
