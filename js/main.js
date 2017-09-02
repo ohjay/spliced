@@ -283,7 +283,7 @@ function setupMarkers() {
 
 function setupModalClose() {
   $('#' + ID_MODAL_CLOSE).click(function(evt) {
-    e.preventDefault();
+    evt.preventDefault();
     Custombox.modal.close();
     return false;
   });
@@ -316,10 +316,7 @@ function setupGoButtons() {
             target: '#' + ID_OUTPUT_MODAL
           }
         }).open();
-        console.log('#' + ID_DOWNLOAD);
-        console.log('---');
-        console.log(cvs.toDataURL('image/png'));
-        $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png'));
+        document.getElementById(ID_DOWNLOAD).href = cvs.toDataURL('image/png');
       } else {
         // morph failed
         // TODO do something (make them reposition points?)

@@ -18,7 +18,7 @@ const ID_TAKE_PICTURE_BTN = 'take-picture';
 const ID_ANIMAL_SELECTION = 'animal-selection';
 const ID_GO_CONTAINER     = 'go-buttons';
 const ID_OUTPUT_MODAL     = 'output-modal';
-const ID_DOWNLOAD         = 'download';
+const ID_DOWNLOAD         = 'download-link';
 const ID_MODAL_CLOSE      = 'modal-close';
 
 const DEFAULT_POINTS_FILEPATH = 'data/default.min.json';
