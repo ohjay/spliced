@@ -128,6 +128,11 @@ function setupAnimalSelection() {
 
 function setupImageConfirm() {
   $('#' + ID_CONFIRM_IMG_BTN).click(function(evt) {
+    $('#' + ID_UPLOAD_BTN).addClass('pure-button-disabled');
+    $('#' + ID_TAKE_PICTURE_BTN).addClass('pure-button-disabled');
+    $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
+    // TODO remove confirm button, add restart button
+
     // Create "from" points
     points[ID_IMG_FROM] = [];
     $.getJSON(DEFAULT_POINTS_FILEPATH, function(data) {
