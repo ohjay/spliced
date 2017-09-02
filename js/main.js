@@ -65,12 +65,11 @@ function unnormalize(points, width, height) {
   return points.map(elt => [elt[0] * width, elt[1] * height]);
 }
 
-function importPoints(id, filepath) {
+function drawPointsFromFile(id, filepath) {
   $.getJSON(filepath, function(data) {
-    var fromImg = document.getElementById(ID_IMG_FROM);
-    points[id] = unnormalize(data.points, fromImg.clientWidth, fromImg.clientHeight);
-    var imgPos = findPosition(document.getElementById(id));
-    drawMarkers(id, [imgPos[0], imgPos[1]]);
+    img = document.getElementById(id);
+    points[id] = unnormalize(data.points, img.clientWidth, img.clientHeight);
+    drawMarkers(id, findPosition(img));
   });
 }
 
@@ -93,6 +92,9 @@ function fillOutputCanvas(finalData, cvs, width, height) {
   
   var ctx = cvs.getContext('2d');
   var imgData = ctx.createImageData(width, height);
+  console.log(finalData.length);
+  console.log('---');
+  console.log(width + ', ' + height);
   imgData.data.set(new Uint8ClampedArray(finalData));
   ctx.putImageData(imgData, 0, 0);
   cvs.style.display = 'inline'; // show canvas
@@ -190,58 +192,12 @@ function setupImageConfirm() {
 
     // Create "from" points
     points[ID_IMG_FROM] = [];
-    $.getJSON(DEFAULT_POINTS_FILEPATH, function(data) {
-      var fromImg = document.getElementById(ID_IMG_FROM);
-      var positions = unnormalize(data.points, fromImg.clientWidth, fromImg.clientHeight);
-      for (var i = 0; i < positions.length; ++i) {
-        points[ID_IMG_FROM].push(positions[i]);
-      }
-      
-      // Left side points
-      points[ID_IMG_FROM].push([0.75 * positions[0][0], positions[0][1]]);
-      points[ID_IMG_FROM].push([0.75 * positions[0][0], positions[2][1]]);
-      // Right side points
-      var rdx = 0.25 * (fromImg.clientWidth - positions[14][0]);
-      points[ID_IMG_FROM].push([rdx + positions[14][0], positions[14][1]]);
-      points[ID_IMG_FROM].push([rdx + positions[14][0], positions[12][1]]);
-      // Top points
-      points[ID_IMG_FROM].push([positions[19][0], 0.30 * positions[19][1]]);
-      points[ID_IMG_FROM].push([positions[22][0], 0.25 * positions[22][1]]);
-      points[ID_IMG_FROM].push([positions[18][0], 0.25 * positions[18][1]]);
-      points[ID_IMG_FROM].push([positions[15][0], 0.30 * positions[15][1]]);
-
-      // Draw the markers
-      drawMarkers(ID_IMG_FROM, findPosition(fromImg));
-      setupMarkers(); // make the markers draggable
-    });
+    drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH);
+    setupMarkers(); // make the markers draggable
     
     // Create "to" points
     points[ID_IMG_TO] = [];
-    // TODO: importPoints(ID_IMG_TO, 'TODO-PATH-JSON-TO');
-    // TODO this is temporary (load the same default points)
-    $.getJSON(DEFAULT_POINTS_FILEPATH, function(data) {
-      var toImg = document.getElementById(ID_IMG_TO);
-      var positions = unnormalize(data.points, toImg.clientWidth, toImg.clientHeight);
-      for (var i = 0; i < positions.length; ++i) {
-        points[ID_IMG_TO].push(positions[i]);
-      }
-      
-      // Left side points
-      points[ID_IMG_TO].push([0.75 * positions[0][0], positions[0][1]]);
-      points[ID_IMG_TO].push([0.75 * positions[0][0], positions[2][1]]);
-      // Right side points
-      var rdx = 0.25 * (toImg.clientWidth - positions[14][0]);
-      points[ID_IMG_TO].push([rdx + positions[14][0], positions[14][1]]);
-      points[ID_IMG_TO].push([rdx + positions[14][0], positions[12][1]]);
-      // Top points
-      points[ID_IMG_TO].push([positions[19][0], 0.30 * positions[19][1]]);
-      points[ID_IMG_TO].push([positions[22][0], 0.25 * positions[22][1]]);
-      points[ID_IMG_TO].push([positions[18][0], 0.25 * positions[18][1]]);
-      points[ID_IMG_TO].push([positions[15][0], 0.30 * positions[15][1]]);
-
-      // Draw the markers
-      drawMarkers(ID_IMG_TO, findPosition(toImg));
-    });
+    drawPointsFromFile(ID_IMG_TO, DEFAULT_POINTS_FILEPATH);
   });
 }
 
@@ -311,6 +267,10 @@ function setupGoButtons() {
       var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
           points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
           magnitude, 1.0 - magnitude);
+      if (!morph) {
+        // morph failed
+        // TODO do something (make them reposition points?)
+      }
       fillOutputCanvas(morph, cvs, width, height);
       // document.getElementById(ID_IMG_DL_LINK).href = canvasTo.toDataURL('image/png'); // TODO
       // markerMagic = 0; getRidOfAllOfTheMarkers(); // TODO
