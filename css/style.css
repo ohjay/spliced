@@ -39,7 +39,6 @@ h1 {
 
 img.bordered {
   border: 5px groove #ba8258;
-  background-color #ff0;
 }
 
 div.column {
@@ -63,6 +62,8 @@ td#images-td-left {
 td#images-td-right {
   width: 410px;
   padding: 0 10px 0 5px;
+  vertical-align: -webkit-baseline-middle;
+  vertical-align: middle;
 }
 
 .tac { /* text align center */
@@ -91,6 +92,10 @@ td#images-td-right {
 
 .animal-active {
   opacity: 0.2 !important;
+}
+
+.cropper-container {
+  border: 5px groove #ba8258;
 }
 
 #title {

@@ -19,6 +19,7 @@ function setupImageUploads() {
       var container = document.getElementById(ID_CONTAINER_FROM);
       container.style.width  = otherImg.clientWidth  + 'px';
       container.style.height = otherImg.clientHeight + 'px';
+      container.style.marginBottom = '13px';
       cropper = new Cropper(img, {
         cropBoxResizable: false,
         aspectRatio: otherImg.clientWidth / otherImg.clientHeight,
@@ -35,6 +36,8 @@ function setupImageUploads() {
 
       $('#' + ID_UPLOAD_BTN).css('display', 'none');
       $('#' + ID_CONFIRM_CROP_BTN).css('display', 'inline-block');
+      $('#' + ID_TAKE_PICTURE_BTN).addClass('pure-button-disabled');
+      $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
     }
 
     if (file) {
@@ -54,6 +57,8 @@ function setupImageUploads() {
     // showCanvasesAndMarkers(); // TODO ?
     $('#' + ID_CONFIRM_CROP_BTN).css('display', 'none');
     $('#' + ID_UPLOAD_BTN).css('display', 'inline-block');
+    $('#' + ID_TAKE_PICTURE_BTN).removeClass('pure-button-disabled');
+    $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
   });
 }
 

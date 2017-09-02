@@ -27,7 +27,7 @@
 
     <div class="column">
       <div id="instructions">
-        <b>Instructions:</b> (a) Upload a picture of yourself, or take one with your webcam.<br />
+        <b>Instructions:</b> (a) Upload a picture of yourself, or take one with your webcam. Hit "confirm image."<br />
         (b) Position the markers in the left image to match their counterparts in the right image. <a href="#TODO">(Example)</a><br />
         (c) Select a morph percentage.
       </div>
@@ -42,7 +42,8 @@
           <button class="pure-button top-sm right-sm" id="confirm-crop">Confirm crop</button>
           <label for="upload" class="pure-button top-sm right-sm" id="button-upload">Upload image</label>
           <input type="file" id="upload" />
-          <button class="pure-button top-sm" id="camera-btn">Take picture</button>
+          <button class="pure-button top-sm right-sm" id="take-picture">Take picture</button>
+          <button class="pure-button pure-button-primary top-sm" id="confirm-image">Confirm image</button>
         </figcaption>
       </td>
       <td id="images-td-right">
