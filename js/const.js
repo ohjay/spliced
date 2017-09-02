@@ -19,6 +19,7 @@ const ID_ANIMAL_SELECTION = 'animal-selection';
 const ID_GO_CONTAINER     = 'go-buttons';
 const ID_OUTPUT_MODAL     = 'output-modal';
 const ID_DOWNLOAD         = 'download';
+const ID_MODAL_CLOSE      = 'modal-close';
 
 const DEFAULT_POINTS_FILEPATH = 'data/default.min.json';
 const MARKER_DIR    = 'images/markers/';

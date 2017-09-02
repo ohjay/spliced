@@ -165,7 +165,7 @@ td#images-td-right {
   margin: 0 auto;
 }
 
-#dl-wrapper {
+#modal-text-wrapper {
   text-align: center;
   width: 100%;
   margin-top: 10px;
@@ -178,4 +178,8 @@ td#images-td-right {
   padding: 24px;
   position: relative;
   display: none;
+}
+
+#modal-close {
+  color: #ffffff;
 }

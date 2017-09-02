@@ -281,6 +281,14 @@ function setupMarkers() {
   document.onmouseup   = finishMarkerAdjustment;
 }
 
+function setupModalClose() {
+  $('#' + ID_MODAL_CLOSE).click(function(evt) {
+    e.preventDefault();
+    Custombox.modal.close();
+    return false;
+  });
+}
+
 function setupGoButtons() {
   var container = document.getElementById(ID_GO_CONTAINER);
   var buttons = container.getElementsByTagName('button');
@@ -323,5 +331,6 @@ $(window).on('load', function() {
   setupAnimalSelection();
   setupImageSwitching();
   setupImageConfirm();
+  setupModalClose();
   setupGoButtons();
 });
