@@ -201,8 +201,7 @@ function setupImageConfirm() {
       points[ID_IMG_FROM].push([0.75 * positions[0][0], positions[0][1]]);
       points[ID_IMG_FROM].push([0.75 * positions[0][0], positions[2][1]]);
       // Right side points
-      var img = document.getElementById(ID_IMG_FROM);
-      var rdx = 0.25 * (img.clientWidth - positions[14][0]);
+      var rdx = 0.25 * (fromImg.clientWidth - positions[14][0]);
       points[ID_IMG_FROM].push([rdx + positions[14][0], positions[14][1]]);
       points[ID_IMG_FROM].push([rdx + positions[14][0], positions[12][1]]);
       // Top points
@@ -212,7 +211,7 @@ function setupImageConfirm() {
       points[ID_IMG_FROM].push([positions[15][0], 0.30 * positions[15][1]]);
 
       // Draw the markers
-      drawMarkers(ID_IMG_FROM, findPosition(img));
+      drawMarkers(ID_IMG_FROM, findPosition(fromImg));
       setupMarkers(); // make the markers draggable
     });
     
@@ -231,8 +230,7 @@ function setupImageConfirm() {
       points[ID_IMG_TO].push([0.75 * positions[0][0], positions[0][1]]);
       points[ID_IMG_TO].push([0.75 * positions[0][0], positions[2][1]]);
       // Right side points
-      var img = document.getElementById(ID_IMG_TO);
-      var rdx = 0.25 * (img.clientWidth - positions[14][0]);
+      var rdx = 0.25 * (toImg.clientWidth - positions[14][0]);
       points[ID_IMG_TO].push([rdx + positions[14][0], positions[14][1]]);
       points[ID_IMG_TO].push([rdx + positions[14][0], positions[12][1]]);
       // Top points
@@ -242,7 +240,7 @@ function setupImageConfirm() {
       points[ID_IMG_TO].push([positions[15][0], 0.30 * positions[15][1]]);
 
       // Draw the markers
-      drawMarkers(ID_IMG_TO, findPosition(img));
+      drawMarkers(ID_IMG_TO, findPosition(toImg));
     });
   });
 }
@@ -306,6 +304,14 @@ function setupGoButtons() {
       magnitude = parseInt(this.innerText.slice(0, -1));
       var mtData = runTriangulation(points, magnitude);
       var midpoints = mtData[0], triangles = mtData[1];
+      
+      console.log(midpoints);
+      console.log('---');
+      console.log(triangles);
+      console.log('-----');
+      console.log(points[ID_IMG_FROM]);
+      console.log('-------');
+      console.log(points[ID_IMG_TO]);
       
       var cvs = document.getElementById(ID_CVS_FROM); // TODO make new canvas
       var toImg = document.getElementById(ID_IMG_TO);
