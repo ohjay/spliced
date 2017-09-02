@@ -173,6 +173,9 @@ function computeMidpointImage(midpoints, triangles, fromData, toData,
     transfs.push([A0, A1]);
     
     midCoords = triangleInterior(targetTri);
+    console.log(midCoords);
+    console.log('---')
+    console.log(A0);
     warpedSrc0 = math.multiply(A0, midCoords);
     warpedSrc1 = math.multiply(A1, midCoords);
     

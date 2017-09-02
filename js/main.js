@@ -305,14 +305,6 @@ function setupGoButtons() {
       var mtData = runTriangulation(points, magnitude);
       var midpoints = mtData[0], triangles = mtData[1];
       
-      console.log(midpoints);
-      console.log('---');
-      console.log(triangles);
-      console.log('-----');
-      console.log(points[ID_IMG_FROM]);
-      console.log('-------');
-      console.log(points[ID_IMG_TO]);
-      
       var cvs = document.getElementById(ID_CVS_FROM); // TODO make new canvas
       var toImg = document.getElementById(ID_IMG_TO);
       var width = toImg.clientWidth, height = toImg.clientHeight;
