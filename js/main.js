@@ -74,6 +74,19 @@ function importPoints(id, filepath) {
   });
 }
 
+/*
+ * Returns a 1D RGBA array for the given image element.
+ */
+function getImageData(img) {
+  var cvs = document.createElement('canvas');
+  var ctx = cvs.getContext('2d');
+  cvs.width = img.clientWidth;
+  cvs.height = img.clientHeight;
+  ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+  
+  return ctx.getImageData(0, 0, img.width, img.height);
+}
+
 function fillOutputCanvas(finalData, cvs, width, height) {
   cvs.width = width;
   cvs.height = height;
