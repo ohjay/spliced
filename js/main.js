@@ -263,7 +263,7 @@ function setupGoButtons() {
       var width = toImg.clientWidth, height = toImg.clientHeight;
       var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
           points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
-          magnitude, 1.0 - magnitude);
+          1.0 - magnitude, magnitude);
       if (!morph) {
         // morph failed
         // TODO do something (make them reposition points?)
