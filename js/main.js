@@ -292,7 +292,7 @@ function setupGoButtons() {
             target: '#' + ID_OUTPUT_MODAL
           }
         }).open();
-        document.getElementById(ID_DOWNLOAD).href = cvs.toDataURL('image/png');
+        $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png'));
       } else {
         // morph failed
         // TODO do something (make them reposition points?)

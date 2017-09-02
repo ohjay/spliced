@@ -160,6 +160,17 @@ td#images-td-right {
   display: none;
 }
 
+#canvas-out {
+  display: block;
+  margin: 0 auto;
+}
+
+#dl-wrapper {
+  text-align: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
 #output-modal {
   background-color: #FFF;
   box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.2), 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12);
