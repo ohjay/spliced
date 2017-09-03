@@ -24,9 +24,9 @@ const ID_CAMERA_DIV       = 'camera';
 const ID_LOADER           = 'loader';
 
 const DEFAULT_POINTS_FILEPATH = 'data/starter.json';
-const MARKER_DIR    = 'images/markers/';
-const MARKER_CYCLE  = ['gold.png', 'blue.png', 'green.png',
-                       'red.png', 'purple.png', 'white.png'];
+const NUM_MARKERS   = 20;
+const MARKER_DIR    = 'images/markers/marker';
+const MARKER_EXT    = '.png';
 const BORDER_SIZE   = 5;
 
 const MAGNITUDES = {

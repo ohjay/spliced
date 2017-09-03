@@ -39,8 +39,8 @@ function drawMarkers(id, imgPos) {
   
   var mi = 0;
   for (i = 0; i < numPoints; ++i) {
-    markerSrc = MARKER_DIR + MARKER_CYCLE[mi];
-    mi = (mi + 1) % MARKER_CYCLE.length;
+    markerSrc = MARKER_DIR + mi + MARKER_EXT;
+    mi = (mi + 1) % NUM_MARKERS;
     
     pt = relevantPoints[i];
     document.body.appendChild(createMarker('marker' + currMarkerId, markerSrc));
