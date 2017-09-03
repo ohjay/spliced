@@ -33,7 +33,7 @@ function createMarker(id, markerSrc) {
 /*
  * Draw markers for an already-existent array of points.
  */
-function drawMarkers(id, imgPos) {
+function drawMarkers(id, imgPos, magic=false) {
   var relevantPoints = points[id];
   var numPoints = relevantPoints.length;
   var pt, i, markerSrc;
@@ -49,6 +49,10 @@ function drawMarkers(id, imgPos) {
                                .css('top',  pt[1] + imgPos[1] - 5).show();
     inv[currMarkerId] = i;
     ++currMarkerId;
+  }
+  
+  if (magic) {
+    markerMagic = currMarkerId;
   }
 }
 
@@ -80,11 +84,11 @@ function unnormalize(points, width, height) {
   return points.map(elt => [elt[0] * width, elt[1] * height]);
 }
 
-function drawPointsFromFile(id, filepath) {
+function drawPointsFromFile(id, filepath, magic=false) {
   $.getJSON(filepath, function(data) {
     img = document.getElementById(id);
     points[id] = unnormalize(data.points, img.clientWidth, img.clientHeight);
-    drawMarkers(id, findPosition(img));
+    drawMarkers(id, findPosition(img), magic);
   });
 }
 
@@ -328,9 +332,8 @@ function setupImageConfirm() {
 
     // Create "from" points
     points[ID_IMG_FROM] = [];
-    drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH);
+    drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true);
     setupMarkers(); // make the markers draggable
-    markerMagic = currMarkerId + 1;
     
     // Create "to" points
     points[ID_IMG_TO] = [];
