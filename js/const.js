@@ -23,7 +23,7 @@ const ID_MODAL_CLOSE      = 'modal-close';
 const ID_CAMERA_DIV       = 'camera';
 const ID_LOADER           = 'loader';
 
-const DEFAULT_POINTS_FILEPATH = 'data/starter.json';
+const DEFAULT_POINTS_FILEPATH = 'data/owen.json';
 const NUM_MARKERS   = 15;
 const MARKER_DIR    = 'images/markers/marker';
 const MARKER_EXT    = '.png';

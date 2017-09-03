@@ -25,7 +25,5 @@ function serializePoints(id) {
     'points': normalize(points[id], width, height)
   };
   var jsonData = JSON.stringify(obj);
-  var url = 'data:text/json;charset=utf8,' + encodeURIComponent(jsonData);
-  window.open(url, '_blank');
-  window.focus();
+  window.open().document.write(jsonData);
 }
