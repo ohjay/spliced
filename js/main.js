@@ -130,16 +130,16 @@ function stopCamera() {
 }
 
 function doMorph() {
-  var fromData = getImageData(document.getElementById(ID_IMG_FROM)).data;
-  var toData = getImageData(document.getElementById(ID_IMG_TO)).data;
-
-  magnitude = parseInt(this.innerText.slice(0, -1)) / 100.0;
+  var magnitude = parseInt(this.innerText.slice(0, -1)) / 100.0;
   var mtData = runTriangulation(points, 1.0 - magnitude);
   var midpoints = mtData[0], triangles = mtData[1];
   
-  var cvs = document.getElementById(ID_CVS_OUT);
+  var fromData = getImageData(document.getElementById(ID_IMG_FROM)).data;
+  var toData = getImageData(document.getElementById(ID_IMG_TO)).data;
+
   var toImg = document.getElementById(ID_IMG_TO);
   var width = toImg.clientWidth, height = toImg.clientHeight;
+  var cvs = document.getElementById(ID_CVS_OUT);
   
   // Replace GO buttons with busy icon
   $('#' + ID_GO_CONTAINER).css('display', 'none');
@@ -378,8 +378,7 @@ function setupModalClose() {
 function setupGoButtons() {
   var container = document.getElementById(ID_GO_CONTAINER);
   var buttons = container.getElementsByTagName('button');
-  var i, magnitude;
-  for (i = 0; i < buttons.length; ++i) {
+  for (var i = 0; i < buttons.length; ++i) {
     buttons[i].onclick = doMorph;
   }
 }
