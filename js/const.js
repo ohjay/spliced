@@ -39,4 +39,6 @@ const MAGNITUDES  = {
   10: {'shape': 0.90, 'color0': 0.70, 'color1': 0.30},
   15: {'shape': 0.70, 'color0': 0.70, 'color1': 0.30},
   50: {'shape': 0.50, 'color0': 0.50, 'color1': 0.50}
-}
+};
+
+const CLMTRACKR_TIMEOUT = 5000;

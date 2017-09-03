@@ -148,6 +148,39 @@ function stopCamera() {
   $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
 }
 
+function detectPoints(imgId) {
+  var img = document.getElementById(imgId);
+  var cvs = document.createElement('canvas');
+  var ctx = cvs.getContext('2d');
+  cvs.width = img.clientWidth, cvs.height = img.clientHeight;
+  ctx.drawImage(img, 0, 0, cvs.width, cvs.height);
+  
+  var ctracker = new clm.tracker({stopOnConvergence: true});
+  ctracker.init(pModel);
+  ctracker.start(cvs);
+  
+  var info = {hasConverged: false};
+  var onConvergence = function(evt) {
+    info.hasConverged = true;
+    points[imgId] = ctracker.getCurrentPosition();
+    if (!points[imgId]) {
+      drawPointsFromFile(imgId, DEFAULT_POINTS_FILEPATH, true);
+      points[imgId] = defaultPoints.slice();
+    } else {
+      drawMarkers(imgId, findPosition(img), true);
+    }
+    document.removeEventListener('clmtrackrConverged', onConvergence);
+  };
+  
+  // Set a timeout
+  setTimeout(function() { // just in case the tracker never converges
+    if (!info.hasConverged) {
+      ctracker.stop();
+      onConvergence(); // use whatever points we've got
+    }
+  }, CLMTRACKR_TIMEOUT);
+}
+
 function doMorph() {
   var magnitude = parseInt(this.innerText.slice(0, -1)); // divide by 100.0 if true magnitude
   magnitude = MAGNITUDES[magnitude];
@@ -330,7 +363,8 @@ function setupImageConfirm() {
 
     // Create "from" points
     points[ID_IMG_FROM] = [];
-    drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true);
+    detectPoints(ID_IMG_FROM);
+    // drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true);
     setupMarkers(); // make the markers draggable
     
     // Create "to" points
