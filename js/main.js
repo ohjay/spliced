@@ -129,6 +129,51 @@ function stopCamera() {
   $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
 }
 
+function doMorph() {
+  var fromData = getImageData(document.getElementById(ID_IMG_FROM)).data;
+  var toData = getImageData(document.getElementById(ID_IMG_TO)).data;
+
+  magnitude = parseInt(this.innerText.slice(0, -1)) / 100.0;
+  var mtData = runTriangulation(points, 1.0 - magnitude);
+  var midpoints = mtData[0], triangles = mtData[1];
+  
+  var cvs = document.getElementById(ID_CVS_OUT);
+  var toImg = document.getElementById(ID_IMG_TO);
+  var width = toImg.clientWidth, height = toImg.clientHeight;
+  
+  // Replace GO buttons with busy icon
+  $('#' + ID_GO_CONTAINER).css('display', 'none');
+  $('#' + ID_LOADER).css('display', 'inline-block');
+  
+  console.log('buttons replaced');
+
+  var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
+      points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
+      1.0 - magnitude, magnitude);
+
+  // Replace busy icon with GO buttons
+  $('#' + ID_LOADER).css('display', 'none');
+  $('#' + ID_GO_CONTAINER).css('display', 'block');
+  
+  console.log('buttons restored');
+
+  if (morph) {
+    fillOutputCanvas(morph, cvs, width, height);
+    new Custombox.modal({
+      content: {
+        effect: 'fadein',
+        target: '#' + ID_OUTPUT_MODAL,
+        onComplete: function() {
+          $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png'));
+        }
+      }
+    }).open();
+  } else {
+    // Morph failed
+    alert('The Splice was a failure! Please reposition the markers.');
+  }
+}
+
 function setupCanvases() {
   overlay(ID_CVS_FROM, ID_IMG_FROM, BORDER_SIZE);
   overlay(ID_CVS_TO, ID_IMG_TO, BORDER_SIZE);
@@ -332,46 +377,7 @@ function setupGoButtons() {
   var buttons = container.getElementsByTagName('button');
   var i, magnitude;
   for (i = 0; i < buttons.length; ++i) {
-    buttons[i].onclick = function() {
-      var fromData = getImageData(document.getElementById(ID_IMG_FROM)).data;
-      var toData = getImageData(document.getElementById(ID_IMG_TO)).data;
-
-      magnitude = parseInt(this.innerText.slice(0, -1)) / 100.0;
-      var mtData = runTriangulation(points, 1.0 - magnitude);
-      var midpoints = mtData[0], triangles = mtData[1];
-      
-      var cvs = document.getElementById(ID_CVS_OUT);
-      var toImg = document.getElementById(ID_IMG_TO);
-      var width = toImg.clientWidth, height = toImg.clientHeight;
-      
-      // Replace GO buttons with busy icon
-      $('#' + ID_GO_CONTAINER).css('display', 'none');
-      $('#' + ID_LOADER).css('display', 'inline-block');
-
-      var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
-          points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
-          1.0 - magnitude, magnitude);
-
-      // Replace busy icon with GO buttons
-      $('#' + ID_LOADER).css('display', 'none');
-      $('#' + ID_GO_CONTAINER).css('display', 'block');
-
-      if (morph) {
-        fillOutputCanvas(morph, cvs, width, height);
-        new Custombox.modal({
-          content: {
-            effect: 'fadein',
-            target: '#' + ID_OUTPUT_MODAL,
-            onComplete: function() {
-              $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png'));
-            }
-          }
-        }).open();
-      } else {
-        // Morph failed
-        alert('The Splice was a failure! Please reposition the markers.');
-      }
-    }
+    buttons[i].onclick = doMorph;
   }
 }
 

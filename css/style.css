@@ -192,8 +192,8 @@ td#images-td-right {
   border-radius: 50%;
   border-top: 4px solid #0078e7;
   border-bottom: 4px solid #0078e7;
-  width: 25px;
-  height: 25px;
+  width: 27px;
+  height: 27px;
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
   display: none;
