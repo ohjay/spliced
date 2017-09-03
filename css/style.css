@@ -159,7 +159,7 @@ td#images-td-right {
   line-height: 1.6em;
 }
 
-#canvas-from, #canvas-to {
+#canvas-from, #canvas-to, #camera {
   display: none;
 }
 
@@ -187,6 +187,24 @@ td#images-td-right {
   color: #ffffff;
 }
 
-#camera {
+#loader {
+  border: 4px solid #e6e6e6;
+  border-radius: 50%;
+  border-top: 4px solid #0078e7;
+  border-bottom: 4px solid #0078e7;
+  width: 25px;
+  height: 25px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
   display: none;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

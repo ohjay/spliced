@@ -343,9 +343,19 @@ function setupGoButtons() {
       var cvs = document.getElementById(ID_CVS_OUT);
       var toImg = document.getElementById(ID_IMG_TO);
       var width = toImg.clientWidth, height = toImg.clientHeight;
+      
+      // Replace GO buttons with busy icon
+      $('#' + ID_GO_CONTAINER).css('display', 'none');
+      $('#' + ID_LOADER).css('display', 'inline-block');
+
       var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
           points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
           1.0 - magnitude, magnitude);
+
+      // Replace busy icon with GO buttons
+      $('#' + ID_LOADER).css('display', 'none');
+      $('#' + ID_GO_CONTAINER).css('display', 'block');
+
       if (morph) {
         fillOutputCanvas(morph, cvs, width, height);
         new Custombox.modal({

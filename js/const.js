@@ -21,6 +21,7 @@ const ID_OUTPUT_MODAL     = 'output-modal';
 const ID_DOWNLOAD         = 'download-link';
 const ID_MODAL_CLOSE      = 'modal-close';
 const ID_CAMERA_DIV       = 'camera';
+const ID_LOADER           = 'loader';
 
 const DEFAULT_POINTS_FILEPATH = 'data/default.min.json';
 const MARKER_DIR    = 'images/markers/';
