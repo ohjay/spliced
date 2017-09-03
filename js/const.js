@@ -23,7 +23,7 @@ const ID_MODAL_CLOSE      = 'modal-close';
 const ID_CAMERA_DIV       = 'camera';
 const ID_LOADER           = 'loader';
 
-const DEFAULT_POINTS_FILEPATH = 'data/default.min.json';
+const DEFAULT_POINTS_FILEPATH = 'data/starter.json';
 const MARKER_DIR    = 'images/markers/';
 const MARKER_CYCLE  = ['gold.png', 'blue.png', 'green.png',
                        'red.png', 'purple.png', 'white.png'];

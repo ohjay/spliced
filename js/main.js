@@ -6,6 +6,7 @@ var activeAnimal = null;
 var currMarkerId = 0;
 var points       = {};
 var inv          = {}; // marker ID # --> index in respective `points` array
+var relevId      = ID_IMG_FROM;
 var relevCtx, relevWidth, relevHeight, relevMarkerNo, relevPos;
 var cropper;
 
@@ -332,8 +333,9 @@ function setupMarkers() {
       return;
     }
 
-    relevCtx = document.getElementById(ID_CVS_FROM).getContext('2d');
-    var relevImg = document.getElementById(ID_IMG_FROM);
+    var cvsId = (relevId == ID_IMG_FROM) ? ID_CVS_FROM : ID_CVS_TO;
+    relevCtx = document.getElementById(cvsId).getContext('2d');
+    var relevImg = document.getElementById(relevId);
     relevWidth  = relevImg.clientWidth;
     relevHeight = relevImg.clientHeight;
     relevMarkerNo = parseInt(target.id.match(/\d+$/)[0], 10);
@@ -355,7 +357,7 @@ function setupMarkers() {
     if (inImgCoords[0] >= 0 && inImgCoords[0] < relevWidth &&
         inImgCoords[1] >= 0 && inImgCoords[1] < relevHeight) {
       $('#marker' + relevMarkerNo).css('left', evt.pageX - 5).css('top', evt.pageY - 5);
-      points[ID_IMG_FROM][inv[relevMarkerNo]] = inImgCoords;
+      points[relevId][inv[relevMarkerNo]] = inImgCoords;
       relevCtx.clearRect(0, 0, relevWidth, relevHeight);
     }
     return false;
