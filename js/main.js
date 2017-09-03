@@ -107,9 +107,10 @@ function fillOutputCanvas(finalData, cvs, width, height) {
 
 function startCamera() {
   $('#' + ID_CAMERA_DIV).css('display', 'block');
+  var fromImg = document.getElementById(ID_IMG_FROM);
   Webcam.set({
-    width: 320,
-    height: 240,
+    width: fromImg.clientWidth,
+    height: fromImg.clientHeight,
     image_format: 'jpeg',
     jpeg_quality: 90
   });
@@ -125,11 +126,11 @@ function stopCamera() {
     var img = document.getElementById(ID_IMG_FROM);
     img.src = cvs.toDataURL();
     Webcam.reset();
+    $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', startCamera);
   });
 
   $('#' + ID_CAMERA_DIV).css('display', 'none');
   $('#' + ID_TAKE_PICTURE_BTN).removeClass('gold');
-  $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', startCamera); // reverse click handler
   $('#' + ID_UPLOAD_BTN).removeClass('pure-button-disabled');
   $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
 }
@@ -196,7 +197,7 @@ function setupImageUploads() {
 }
 
 function setupCamera() {
-  overlay(ID_CAMERA_DIV, ID_IMG_FROM);
+  overlay(ID_CAMERA_DIV, ID_IMG_FROM, BORDER_SIZE);
   $('#' + ID_TAKE_PICTURE_BTN).click(function(evt) {
     startCamera();
     $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', stopCamera);
