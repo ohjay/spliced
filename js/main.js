@@ -351,10 +351,12 @@ function setupGoButtons() {
         new Custombox.modal({
           content: {
             effect: 'fadein',
-            target: '#' + ID_OUTPUT_MODAL
+            target: '#' + ID_OUTPUT_MODAL,
+            onComplete: function() {
+              $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png'));
+            }
           }
         }).open();
-        $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png')); // TODO why does this not work
       } else {
         // morph failed
         // TODO do something (make them reposition points?)
