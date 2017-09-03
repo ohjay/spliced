@@ -358,8 +358,8 @@ function setupGoButtons() {
           }
         }).open();
       } else {
-        // morph failed
-        // TODO do something (make them reposition points?)
+        // Morph failed
+        alert('The Splice was a failure! Please reposition the markers.');
       }
     }
   }
