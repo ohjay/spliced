@@ -143,6 +143,10 @@ td#images-td-right {
   display: none;
 }
 
+#safari-warning {
+  font-size: 0.85em;
+}
+
 #animal-selection img {
   opacity: 1.0;
   cursor: pointer;
