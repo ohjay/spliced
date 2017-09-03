@@ -107,19 +107,11 @@ function fillOutputCanvas(finalData, cvs, width, height) {
 
 function startCamera() {
   $('#' + ID_CAMERA_DIV).css('display', 'block');
-  var fromImg = document.getElementById(ID_IMG_FROM);
-  Webcam.set({
-    width: fromImg.clientHeight / 3 * 4, // 4:3 ratio required
-    height: fromImg.clientHeight,
-    crop_width: fromImg.clientWidth,
-    crop_height: fromImg.clientHeight,
-    image_format: 'jpeg',
-    jpeg_quality: 90
-  });
   Webcam.attach('#' + ID_CAMERA_DIV);
   $('#' + ID_UPLOAD_BTN).addClass('pure-button-disabled');
   $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
   $('#' + ID_TAKE_PICTURE_BTN).addClass('gold');
+  $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', stopCamera);
 }
 
 function stopCamera() {
@@ -202,10 +194,16 @@ function setupImageUploads() {
 
 function setupCamera() {
   overlay(ID_CAMERA_DIV, ID_IMG_FROM, BORDER_SIZE);
-  $('#' + ID_TAKE_PICTURE_BTN).click(function(evt) {
-    startCamera();
-    $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', stopCamera);
+  var fromImg = document.getElementById(ID_IMG_FROM);
+  Webcam.set({
+    width: fromImg.clientHeight / 3 * 4, // 4:3 ratio required
+    height: fromImg.clientHeight,
+    crop_width: fromImg.clientWidth,
+    crop_height: fromImg.clientHeight,
+    image_format: 'jpeg',
+    jpeg_quality: 90
   });
+  $('#' + ID_TAKE_PICTURE_BTN).click(startCamera);
 }
 
 function setupAnimalSelection() {
