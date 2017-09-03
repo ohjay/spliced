@@ -125,12 +125,13 @@ function stopCamera() {
     var img = document.getElementById(ID_IMG_FROM);
     img.src = cvs.toDataURL();
     Webcam.reset();
-    $('#' + ID_CAMERA_DIV).css('display', 'none');
-    $('#' + ID_TAKE_PICTURE_BTN).removeClass('gold');
-    $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', startCamera); // reverse click handler
-    $('#' + ID_UPLOAD_BTN).removeClass('pure-button-disabled');
-    $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
   });
+
+  $('#' + ID_CAMERA_DIV).css('display', 'none');
+  $('#' + ID_TAKE_PICTURE_BTN).removeClass('gold');
+  $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', startCamera); // reverse click handler
+  $('#' + ID_UPLOAD_BTN).removeClass('pure-button-disabled');
+  $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
 }
 
 function setupCanvases() {
