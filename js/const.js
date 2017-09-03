@@ -24,7 +24,7 @@ const ID_CAMERA_DIV       = 'camera';
 const ID_LOADER           = 'loader';
 
 const POINTS_DIR              = 'data';
-const DEFAULT_POINTS_FILEPATH = 'owen.json';
+const DEFAULT_POINTS_FILEPATH = 'data/owen.json';
 const SUPPORTED_ANIMALS       = [
   'eagle'
 ];

@@ -92,7 +92,7 @@ function getPointsFilepath(imgId) {
   var src = document.getElementById(imgId).src;
   var animal = src.substring(src.lastIndexOf('/') + 1, src.lastIndexOf('.'));
   if (SUPPORTED_ANIMALS.indexOf(animal) > -1) {
-    return animal + '.min.json';
+    return [POINTS_DIR, animal + '.min.json'].join('/');
   } else {
     return DEFAULT_POINTS_FILEPATH;
   }
