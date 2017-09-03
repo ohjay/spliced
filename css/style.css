@@ -109,6 +109,10 @@ td#images-td-right {
   background: rgb(223, 117, 20);
 }
 
+.gold {
+  background: #ffde00;
+}
+
 #title {
   width: 600px;
   height: 211px;
@@ -181,4 +185,8 @@ td#images-td-right {
 
 #modal-close {
   color: #ffffff;
+}
+
+#camera {
+  display: none;
 }

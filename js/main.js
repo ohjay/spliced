@@ -105,6 +105,34 @@ function fillOutputCanvas(finalData, cvs, width, height) {
   cvs.style.display = 'block'; // show canvas
 }
 
+function startCamera() {
+  $('#' + ID_CAMERA_DIV).css('display', 'block');
+  Webcam.set({
+    width: 320,
+    height: 240,
+    image_format: 'jpeg',
+    jpeg_quality: 90
+  });
+  Webcam.attach('#' + ID_CAMERA_DIV);
+  $('#' + ID_UPLOAD_BTN).addClass('pure-button-disabled');
+  $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
+  $('#' + ID_TAKE_PICTURE_BTN).addClass('gold');
+}
+
+function stopCamera() {
+  // Take the picture
+  Webcam.snap(function(data_uri, cvs, ctx) {
+    var img = document.getElementById(ID_IMG_FROM);
+    img.src = cvs.toDataURL();
+    Webcam.reset();
+    $('#' + ID_CAMERA_DIV).css('display', 'none');
+    $('#' + ID_TAKE_PICTURE_BTN).removeClass('gold');
+    $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', startCamera); // reverse click handler
+    $('#' + ID_UPLOAD_BTN).removeClass('pure-button-disabled');
+    $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
+  });
+}
+
 function setupCanvases() {
   overlay(ID_CVS_FROM, ID_IMG_FROM, BORDER_SIZE);
   overlay(ID_CVS_TO, ID_IMG_TO, BORDER_SIZE);
@@ -117,7 +145,6 @@ function setupImageUploads() {
     var reader = new FileReader();
 
     reader.onloadend = function() {
-      // hideCanvasesAndMarkers(); // TODO ?
       img.style.display = 'none';
       img.src = reader.result;
 
@@ -160,11 +187,18 @@ function setupImageUploads() {
     cropper.destroy();
     var img = document.getElementById(ID_IMG_FROM);
     img.src = croppedCvs.toDataURL();
-    // showCanvasesAndMarkers(); // TODO ?
     $('#' + ID_CONFIRM_CROP_BTN).css('display', 'none');
     $('#' + ID_UPLOAD_BTN).css('display', 'inline-block');
     $('#' + ID_TAKE_PICTURE_BTN).removeClass('pure-button-disabled');
     $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
+  });
+}
+
+function setupCamera() {
+  overlay(ID_CAMERA_DIV, ID_IMG_FROM);
+  $('#' + ID_TAKE_PICTURE_BTN).click(function(evt) {
+    startCamera();
+    $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', stopCamera);
   });
 }
 
@@ -328,6 +362,7 @@ function setupGoButtons() {
 $(window).on('load', function() {
   setupCanvases();
   setupImageUploads();
+  setupCamera();
   setupAnimalSelection();
   setupImageSwitching();
   setupImageConfirm();
