@@ -144,9 +144,7 @@ function doMorph() {
   // Replace GO buttons with busy icon
   $('#' + ID_GO_CONTAINER).css('display', 'none');
   $('#' + ID_LOADER).css('display', 'inline-block');
-  
-  console.log('buttons replaced');
-  var t0 = performance.now();
+
   setTimeout(function() {
     var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
         points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
@@ -173,14 +171,10 @@ function doMorph() {
     $('#' + ID_LOADER).css('display', 'none');
     $('#' + ID_GO_CONTAINER).css('display', 'block');
   
-    var t1 = performance.now();
-    console.log('buttons restored');
-    console.log('sequence took ' + (t1 - t0) + ' milliseconds');
-  
     if (modal != null) {
       modal.open();
     }
-  }, 20000);
+  }, 0);
 }
 
 function setupCanvases() {
