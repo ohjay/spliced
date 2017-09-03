@@ -146,32 +146,41 @@ function doMorph() {
   $('#' + ID_LOADER).css('display', 'inline-block');
   
   console.log('buttons replaced');
+  var t0 = performance.now();
+  setTimeout(function() {
+    var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
+        points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
+        1.0 - magnitude, magnitude);
 
-  var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
-      points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
-      1.0 - magnitude, magnitude);
-
-  // Replace busy icon with GO buttons
-  $('#' + ID_LOADER).css('display', 'none');
-  $('#' + ID_GO_CONTAINER).css('display', 'block');
-  
-  console.log('buttons restored');
-
-  if (morph) {
-    fillOutputCanvas(morph, cvs, width, height);
-    new Custombox.modal({
-      content: {
-        effect: 'fadein',
-        target: '#' + ID_OUTPUT_MODAL,
-        onComplete: function() {
-          $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png'));
+    var modal = null;
+    if (morph) {
+      fillOutputCanvas(morph, cvs, width, height);
+      var modal = new Custombox.modal({
+        content: {
+          effect: 'fadein',
+          target: '#' + ID_OUTPUT_MODAL,
+          onComplete: function() {
+            $('#' + ID_DOWNLOAD).attr('href', cvs.toDataURL('image/png'));
+          }
         }
-      }
-    }).open();
-  } else {
-    // Morph failed
-    alert('The Splice was a failure! Please reposition the markers.');
-  }
+      });
+    } else {
+      // Morph failed
+      alert('The Splice was a failure! Please reposition the markers.');
+    }
+  
+    // Replace busy icon with GO buttons
+    $('#' + ID_LOADER).css('display', 'none');
+    $('#' + ID_GO_CONTAINER).css('display', 'block');
+  
+    var t1 = performance.now();
+    console.log('buttons restored');
+    console.log('sequence took ' + (t1 - t0) + ' milliseconds');
+  
+    if (modal != null) {
+      modal.open();
+    }
+  }, 20000);
 }
 
 function setupCanvases() {
