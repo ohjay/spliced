@@ -23,13 +23,18 @@ const ID_MODAL_CLOSE      = 'modal-close';
 const ID_CAMERA_DIV       = 'camera';
 const ID_LOADER           = 'loader';
 
-const DEFAULT_POINTS_FILEPATH = 'data/owen.json';
+const POINTS_DIR              = 'data';
+const DEFAULT_POINTS_FILEPATH = 'owen.json';
+const SUPPORTED_ANIMALS       = [
+  'eagle'
+];
+
 const NUM_MARKERS   = 15;
 const MARKER_DIR    = 'images/markers/marker';
 const MARKER_EXT    = '.png';
-const BORDER_SIZE   = 5;
 
-const MAGNITUDES = {
+const BORDER_SIZE = 5;
+const MAGNITUDES  = {
   5:  {'shape': 0.95, 'color0': 0.90, 'color1': 0.20},
   10: {'shape': 0.90, 'color0': 0.70, 'color1': 0.30},
   15: {'shape': 0.70, 'color0': 0.70, 'color1': 0.30},

@@ -4,6 +4,7 @@
 
 var activeAnimal = null;
 var currMarkerId = 0;
+var markerMagic  = 0;
 var points       = {};
 var inv          = {}; // marker ID # --> index in respective `points` array
 var relevId      = ID_IMG_FROM;
@@ -51,8 +52,13 @@ function drawMarkers(id, imgPos) {
   }
 }
 
-function removeAllMarkers() {
-  while (currMarkerId > 0) {
+function removeAllMarkers(magic=false) {
+  var stopId = 0;
+  if (magic) {
+    stopId = markerMagic;
+    markerMagic = 0;
+  }
+  while (currMarkerId > stopId) {
     var markerElt = document.getElementById('marker' + --currMarkerId);
     document.body.removeChild(markerElt);
   }
@@ -80,6 +86,16 @@ function drawPointsFromFile(id, filepath) {
     points[id] = unnormalize(data.points, img.clientWidth, img.clientHeight);
     drawMarkers(id, findPosition(img));
   });
+}
+
+function getPointsFilepath(imgId) {
+  var src = document.getElementById(imgId).src;
+  var animal = src.substring(src.lastIndexOf('/') + 1, src.lastIndexOf('.'));
+  if (SUPPORTED_ANIMALS.indexOf(animal) > -1) {
+    return animal + '.min.json';
+  } else {
+    return DEFAULT_POINTS_FILEPATH;
+  }
 }
 
 /*
@@ -134,7 +150,7 @@ function doMorph() {
   var magnitude = parseInt(this.innerText.slice(0, -1)); // divide by 100.0 if true magnitude
   magnitude = MAGNITUDES[magnitude];
   
-  var mtData = runTriangulation(points, 1.0 - magnitude['shape']);
+  var mtData = runTriangulation(points, magnitude['shape']);
   var midpoints = mtData[0], triangles = mtData[1];
   
   var fromData = getImageData(document.getElementById(ID_IMG_FROM)).data;
@@ -273,6 +289,12 @@ function setupAnimalSelection() {
       $('#' + ID_IMG_TO).attr('src', src.replace('_small', ''));
       activeAnimal = this;
       $(activeAnimal).addClass('animal-active');
+
+      // Update points
+      if (ID_IMG_TO in points) {
+        removeAllMarkers(true); // it says "all", but it's only the destination points
+        drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO));
+      }
     }
   }
 }
@@ -308,10 +330,11 @@ function setupImageConfirm() {
     points[ID_IMG_FROM] = [];
     drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH);
     setupMarkers(); // make the markers draggable
+    markerMagic = currMarkerId + 1;
     
     // Create "to" points
     points[ID_IMG_TO] = [];
-    drawPointsFromFile(ID_IMG_TO, DEFAULT_POINTS_FILEPATH);
+    drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO));
     
     // Activate GO buttons
     var container = document.getElementById(ID_GO_CONTAINER);
