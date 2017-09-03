@@ -57,12 +57,10 @@ function drawMarkers(id, imgPos, magic=false) {
 }
 
 function removeAllMarkers(magic=false) {
-  var stopId = 0;
-  if (magic) {
-    stopId = markerMagic;
+  if (!magic) {
     markerMagic = 0;
   }
-  while (currMarkerId > stopId) {
+  while (currMarkerId > markerMagic) {
     var markerElt = document.getElementById('marker' + --currMarkerId);
     document.body.removeChild(markerElt);
   }
@@ -295,7 +293,7 @@ function setupAnimalSelection() {
       $(activeAnimal).addClass('animal-active');
 
       // Update points
-      if (ID_IMG_TO in points) {
+      if (currMarkerId > 0) {
         removeAllMarkers(true); // it says "all", but it's only the destination points
         drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO));
       }
