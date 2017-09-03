@@ -28,3 +28,10 @@ const MARKER_DIR    = 'images/markers/';
 const MARKER_CYCLE  = ['gold.png', 'blue.png', 'green.png',
                        'red.png', 'purple.png', 'white.png'];
 const BORDER_SIZE   = 5;
+
+const MAGNITUDES = {
+  5:  {'shape': 0.95, 'color0': 0.90, 'color1': 0.20},
+  10: {'shape': 0.90, 'color0': 0.70, 'color1': 0.30},
+  15: {'shape': 0.70, 'color0': 0.70, 'color1': 0.30},
+  50: {'shape': 0.50, 'color0': 0.50, 'color1': 0.50}
+}
