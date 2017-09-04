@@ -191,7 +191,6 @@ function detectPoints(imgId, callback) {
   
   var ctracker = new clm.tracker({stopOnConvergence: true});
   ctracker.init(pModel);
-  ctracker.start(cvs);
   
   var info = {hasConverged: false};
   var onConvergence = function(evt) {
@@ -206,12 +205,9 @@ function detectPoints(imgId, callback) {
         }
       }
       points[imgId] = constrain(cpts.concat(aux), img.clientWidth, img.clientHeight);
-    }
-    if (!points[imgId]) {
-      drawPointsFromFile(imgId, DEFAULT_POINTS_FILEPATH, true);
-      points[imgId] = defaultPoints.slice();
-    } else {
       drawMarkers(imgId, findPosition(img), true);
+    } else {
+      drawPointsFromFile(imgId, DEFAULT_POINTS_FILEPATH, true);
     }
     document.removeEventListener('clmtrackrConverged', onConvergence);
     if (typeof callback !== 'undefined' && callback != null) {
@@ -219,6 +215,7 @@ function detectPoints(imgId, callback) {
     }
   };
   document.addEventListener('clmtrackrConverged', onConvergence, false);
+  ctracker.start(cvs);
 
   // Set a timeout
   setTimeout(function() { // just in case the tracker never converges
