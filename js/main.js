@@ -148,6 +148,28 @@ function stopCamera() {
   $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
 }
 
+function computeAuxPoints(cpts, width) {
+  var auxPoints = [];
+  
+  // Top left points
+  auxPoints.push([0.75 * cpts[0][0], cpts[0][1]]);
+  auxPoints.push([0.50 * cpts[0][0], cpts[3][1]]);
+  auxPoints.push([0.45 * cpts[0][0], cpts[4][1]]);
+  auxPoints.push([0.40 * cpts[0][0], cpts[5][1]]);
+  
+  // Middle two points
+  auxPoints.push([0.35 * cpts[0][0], cpts[33][1]]);
+  auxPoints.push([0.60 * cpts[0][0], cpts[33][1]]);
+  
+  // Top right points
+  auxPoints.push([0.40 * cpts[0][0], cpts[9][1]]);
+  auxPoints.push([0.45 * cpts[0][0], cpts[10][1]]);
+  auxPoints.push([0.50 * cpts[0][0], cpts[11][1]]);
+  auxPoints.push([0.75 * cpts[0][0], cpts[14][1]]);
+  
+  return auxPoints;
+}
+
 function detectPoints(imgId, callback) {
   var img = document.getElementById(imgId);
   var cvs = document.createElement('canvas');
@@ -162,7 +184,17 @@ function detectPoints(imgId, callback) {
   var info = {hasConverged: false};
   var onConvergence = function(evt) {
     info.hasConverged = true;
-    points[imgId] = ctracker.getCurrentPosition();
+    var cpts = ctracker.getCurrentPosition();
+    if (cpts) {
+      var aux = computeAuxPoints(cpts);
+      for (var idx = cpts.length; idx >= 0; --idx) {
+        if (CLMTRACKR_KEEP.indexOf(idx) === -1) {
+          // We shouldn't keep this one
+          cpts.splice(idx, 1);
+        }
+      }
+      points[imgId] = cpts.concat(aux);
+    }
     if (!points[imgId]) {
       drawPointsFromFile(imgId, DEFAULT_POINTS_FILEPATH, true);
       points[imgId] = defaultPoints.slice();
@@ -174,7 +206,8 @@ function detectPoints(imgId, callback) {
       callback();
     }
   };
-  
+  document.addEventListener('clmtrackrConverged', onConvergence, false);
+
   // Set a timeout
   setTimeout(function() { // just in case the tracker never converges
     if (!info.hasConverged) {

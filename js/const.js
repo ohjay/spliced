@@ -42,3 +42,6 @@ const MAGNITUDES  = {
 };
 
 const CLMTRACKR_TIMEOUT = 5000; // ms
+const CLMTRACKR_KEEP    = [
+  0, 2, 4, 7, 10, 12, 14, 23, 24, 25, 26, 28, 29, 30, 31, 33, 35, 37, 39, 44, 47, 50, 53
+];
