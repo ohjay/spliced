@@ -231,7 +231,8 @@ function doMorph() {
   var magnitude = parseInt(this.innerText.slice(0, -1)); // divide by 100.0 if true magnitude
   magnitude = MAGNITUDES[magnitude];
   
-  var mtData = runTriangulation(points, magnitude['shape']);
+  var pointsCopy = JSON.parse(JSON.stringify(points));
+  var mtData = runTriangulation(pointsCopy, magnitude['shape']);
   var midpoints = mtData[0], triangles = mtData[1];
   
   var fromData = getImageData(document.getElementById(ID_IMG_FROM)).data;
@@ -247,7 +248,7 @@ function doMorph() {
 
   setTimeout(function() {
     var morph = computeMidpointImage(midpoints, triangles, fromData, toData,
-        points[ID_IMG_FROM], points[ID_IMG_TO], width, height, cvs,
+        pointsCopy[ID_IMG_FROM], pointsCopy[ID_IMG_TO], width, height, cvs,
         magnitude['color0'], magnitude['color1']);
 
     var modal = null;
