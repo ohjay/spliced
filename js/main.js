@@ -152,20 +152,20 @@ function computeAuxPoints(cpts, width) {
   var auxPoints = [];
   
   // Top left points
-  auxPoints.push([0.75 * cpts[0][0], cpts[0][1]]);
-  auxPoints.push([0.50 * cpts[0][0], cpts[3][1]]);
-  auxPoints.push([0.45 * cpts[0][0], cpts[4][1]]);
-  auxPoints.push([0.40 * cpts[0][0], cpts[5][1]]);
+  auxPoints.push([cpts[0][0], 0.75 * cpts[0][1]]);
+  auxPoints.push([cpts[3][0], 0.50 * cpts[0][1]]);
+  auxPoints.push([cpts[4][0], 0.45 * cpts[0][1]]);
+  auxPoints.push([cpts[5][0], 0.40 * cpts[0][1]]);
   
   // Middle two points
-  auxPoints.push([0.35 * cpts[0][0], cpts[33][1]]);
-  auxPoints.push([0.60 * cpts[0][0], cpts[33][1]]);
+  auxPoints.push([cpts[33][0], 0.35 * cpts[0][1]]);
+  auxPoints.push([cpts[33][0], 0.60 * cpts[0][1]]);
   
   // Top right points
-  auxPoints.push([0.40 * cpts[0][0], cpts[9][1]]);
-  auxPoints.push([0.45 * cpts[0][0], cpts[10][1]]);
-  auxPoints.push([0.50 * cpts[0][0], cpts[11][1]]);
-  auxPoints.push([0.75 * cpts[0][0], cpts[14][1]]);
+  auxPoints.push([cpts[9][0],  0.40 * cpts[0][1]]);
+  auxPoints.push([cpts[10][0], 0.45 * cpts[0][1]]);
+  auxPoints.push([cpts[11][0], 0.50 * cpts[0][1]]);
+  auxPoints.push([cpts[14][0], 0.75 * cpts[0][1]]);
   
   return auxPoints;
 }
