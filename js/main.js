@@ -415,16 +415,17 @@ function setupImageConfirm() {
       // Create "to" points AFTER "from" points are decided
       points[ID_IMG_TO] = [];
       drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO), false);
-    });
-    setupMarkers(); // make the markers draggable
+      
+      setupMarkers(); // make the "from" markers draggable
     
-    // Activate GO buttons
-    var container = document.getElementById(ID_GO_CONTAINER);
-    var buttons = container.getElementsByTagName('button');
-    var i;
-    for (i = 0; i < buttons.length; ++i) {
-      $(buttons[i]).removeClass('pure-button-disabled');
-    }
+      // Activate GO buttons
+      var container = document.getElementById(ID_GO_CONTAINER);
+      var buttons = container.getElementsByTagName('button');
+      var i;
+      for (i = 0; i < buttons.length; ++i) {
+        $(buttons[i]).removeClass('pure-button-disabled');
+      }
+    });
   });
 }
 
