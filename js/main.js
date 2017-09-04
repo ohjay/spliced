@@ -205,7 +205,7 @@ function detectPoints(imgId, callback) {
           cpts.splice(idx, 1);
         }
       }
-      points[imgId] = constrain(cpts.concat(aux), width, height);
+      points[imgId] = constrain(cpts.concat(aux), img.clientWidth, img.clientHeight);
     }
     if (!points[imgId]) {
       drawPointsFromFile(imgId, DEFAULT_POINTS_FILEPATH, true);
