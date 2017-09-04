@@ -148,10 +148,10 @@ function stopCamera() {
   $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
 }
 
-function computeAuxPoints(cpts, width) {
+function computeAuxPoints(cpts) {
   var auxPoints = [];
   
-  // Top left points
+  // Top left points ([0] is x, [1] is y)
   auxPoints.push([cpts[0][0], 0.75 * cpts[0][1]]);
   auxPoints.push([cpts[3][0], 0.50 * cpts[0][1]]);
   auxPoints.push([cpts[4][0], 0.45 * cpts[0][1]]);
@@ -168,6 +168,18 @@ function computeAuxPoints(cpts, width) {
   auxPoints.push([cpts[14][0], 0.75 * cpts[0][1]]);
   
   return auxPoints;
+}
+
+/*
+ * Ensure that all points are within the specified dimensions,
+ * clamping values if necessary.
+ * Assumes that dim 0 is horizontal and dim 1 is vertical.
+ */
+function constrain(pts, width, height) {
+  for (var i = 0; i < pts.length; ++i) {
+    pts[i][0] = pts[i][0].clip(0, width  - 1);
+    pts[i][1] = pts[i][1].clip(0, height - 1);
+  }
 }
 
 function detectPoints(imgId, callback) {
@@ -193,7 +205,7 @@ function detectPoints(imgId, callback) {
           cpts.splice(idx, 1);
         }
       }
-      points[imgId] = cpts.concat(aux);
+      points[imgId] = constrain(cpts.concat(aux), width, height);
     }
     if (!points[imgId]) {
       drawPointsFromFile(imgId, DEFAULT_POINTS_FILEPATH, true);

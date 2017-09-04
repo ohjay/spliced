@@ -66,6 +66,12 @@ td#images-td-right {
   vertical-align: middle;
 }
 
+@media only screen and (max-width: 865px) {
+  body {
+    width: 865px;
+  }
+}
+
 .tac { /* text align center */
   text-align: center;
 }

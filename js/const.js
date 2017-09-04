@@ -24,9 +24,9 @@ const ID_CAMERA_DIV       = 'camera';
 const ID_LOADER           = 'loader';
 
 const POINTS_DIR              = 'data';
-const DEFAULT_POINTS_FILEPATH = 'data/owen.json';
+const DEFAULT_POINTS_FILEPATH = 'data/default.min.json';
 const SUPPORTED_ANIMALS       = [
-  'eagle'
+  // none yet. Add in format of 'eagle', ...
 ];
 
 const NUM_MARKERS   = 15;
@@ -41,7 +41,7 @@ const MAGNITUDES  = {
   50: {'shape': 0.50, 'color0': 0.50, 'color1': 0.50}
 };
 
-const CLMTRACKR_TIMEOUT = 5000; // ms
+const CLMTRACKR_TIMEOUT = 3000; // ms
 const CLMTRACKR_KEEP    = [
   0, 2, 4, 7, 10, 12, 14, 23, 24, 25, 26, 28, 29, 30, 31, 33, 35, 37, 39, 44, 47, 50, 53
 ];
