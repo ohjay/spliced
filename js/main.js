@@ -180,6 +180,7 @@ function constrain(pts, width, height) {
     pts[i][0] = pts[i][0].clip(0, width  - 1);
     pts[i][1] = pts[i][1].clip(0, height - 1);
   }
+  return pts;
 }
 
 function detectPoints(imgId, callback) {
