@@ -76,6 +76,10 @@ td#images-td-right {
   body {
     width: 865px;
   }
+
+  div.column {
+    width: 80%;
+  }
 }
 
 .tac { /* text align center */
