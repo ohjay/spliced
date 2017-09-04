@@ -148,7 +148,7 @@ function stopCamera() {
   $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
 }
 
-function detectPoints(imgId) {
+function detectPoints(imgId, callback) {
   var img = document.getElementById(imgId);
   var cvs = document.createElement('canvas');
   var ctx = cvs.getContext('2d');
@@ -170,6 +170,9 @@ function detectPoints(imgId) {
       drawMarkers(imgId, findPosition(img), true);
     }
     document.removeEventListener('clmtrackrConverged', onConvergence);
+    if (typeof callback !== 'undefined' && callback != null) {
+      callback();
+    }
   };
   
   // Set a timeout
@@ -328,7 +331,7 @@ function setupAnimalSelection() {
       // Update points
       if (currMarkerId > 0) {
         removeAllMarkers(true); // it says "all", but it's only the destination points
-        drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO));
+        drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO), false);
       }
     }
   }
@@ -363,13 +366,13 @@ function setupImageConfirm() {
 
     // Create "from" points
     points[ID_IMG_FROM] = [];
-    detectPoints(ID_IMG_FROM);
     // drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true);
+    detectPoints(ID_IMG_FROM, function() {
+      // Create "to" points AFTER "from" points are decided
+      points[ID_IMG_TO] = [];
+      drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO), false);
+    });
     setupMarkers(); // make the markers draggable
-    
-    // Create "to" points
-    points[ID_IMG_TO] = [];
-    drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO));
     
     // Activate GO buttons
     var container = document.getElementById(ID_GO_CONTAINER);
