@@ -422,17 +422,14 @@ function setupImageConfirm() {
     $('#' + ID_TAKE_PICTURE_BTN).addClass('pure-button-disabled');
     $('#' + ID_CONFIRM_IMG_BTN).css('display', 'none');
     $('#' + ID_CHANGE_IMG_BTN).css('display', 'inline-block');
-
-    // Create "from" points
-    points[ID_IMG_FROM] = [];
-    // drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true);
-    detectPoints(ID_IMG_FROM, function() {
+    
+    var _finishSetup = function() {
       // Create "to" points AFTER "from" points are decided
       points[ID_IMG_TO] = [];
       drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO), false);
-      
+
       setupMarkers(); // make the "from" markers draggable
-    
+
       // Activate GO buttons
       var container = document.getElementById(ID_GO_CONTAINER);
       var buttons = container.getElementsByTagName('button');
@@ -440,7 +437,17 @@ function setupImageConfirm() {
       for (i = 0; i < buttons.length; ++i) {
         $(buttons[i]).removeClass('pure-button-disabled');
       }
-    });
+    }
+
+    // Create "from" points
+    points[ID_IMG_FROM] = [];
+    var imgFrom = document.getElementById(ID_IMG_FROM);
+    if (imgFrom.src.endsWith('chimpanzee.jpg')) {
+      drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true);
+      _finishSetup();
+    } else {
+      detectPoints(ID_IMG_FROM, _finishSetup);
+    }
   });
 }
 
