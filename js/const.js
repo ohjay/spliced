@@ -26,7 +26,8 @@ const ID_LOADER           = 'loader';
 const POINTS_DIR              = 'data';
 const DEFAULT_POINTS_FILEPATH = 'data/default.min.json';
 const SUPPORTED_ANIMALS       = [
-  'cat', 'chimpanzee', 'dog1', 'eagle', 'giraffe', 'owl', 'pigeon'
+  'cat', 'chimpanzee', 'dog1', 'eagle', 'giraffe', 'owl', 'pigeon',
+  'polar_bear', 'raccoon', 'ram', 'salamander1', 'snow_leopard', 'squirrel', 'tiger'
 ];
 
 const NUM_MARKERS   = 15;
