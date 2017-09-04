@@ -279,6 +279,7 @@ function doMorph() {
     $('#' + ID_GO_CONTAINER).css('display', 'block');
   
     if (modal != null) {
+      Custombox.modal.closeAll();
       modal.open();
     }
   }, 0);
@@ -499,12 +500,26 @@ function setupMarkers() {
   document.onmouseup   = finishMarkerAdjustment;
 }
 
+function setupExample() {
+  $('#' + ID_EXAMPLE).click(function(evt) {
+    Custombox.modal.closeAll();
+    new Custombox.modal({
+      content: {
+        effect: 'fadein',
+        target: '#' + ID_EXAMPLE_MODAL
+      }
+    }).open();
+  });
+}
+
 function setupModalClose() {
-  $('#' + ID_MODAL_CLOSE).click(function(evt) {
+  var doClose = function(evt) {
     evt.preventDefault();
     Custombox.modal.close();
     return false;
-  });
+  };
+  $('#' + ID_EXAMPLE_CLOSE).click(doClose);
+  $('#' + ID_MODAL_CLOSE  ).click(doClose);
 }
 
 function setupGoButtons() {
@@ -522,6 +537,7 @@ $(window).on('load', function() {
   setupAnimalSelection();
   setupImageSwitching();
   setupImageConfirm();
+  setupExample();
   setupModalClose();
   setupGoButtons();
 });
