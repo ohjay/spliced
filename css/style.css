@@ -133,6 +133,13 @@ td#images-td-right {
   font-size: 0.85em;
 }
 
+.glow {
+  -moz-box-shadow: 0 0 8px #fff;
+  -webkit-box-shadow: 0 0 8px #fff;
+  box-shadow: 0px 0px 8px #fff;
+  border-radius: 4px;
+}
+
 #title {
   width: 600px;
   height: 211px;

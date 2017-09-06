@@ -8,8 +8,7 @@ var markerMagic  = 0;
 var points       = {};
 var inv          = {}; // marker ID # --> index in respective `points` array
 var relevId      = ID_IMG_FROM;
-var adjustment   = false;
-var relevCtx, relevWidth, relevHeight, relevMarkerNo, relevPos;
+var relevCtx, relevWidth, relevHeight, relevMarkerNo = null, relevPos;
 var cropper;
 
 function findPosition(elt) {
@@ -262,21 +261,6 @@ function doMorph() {
   }, 0);
 }
 
-function touchHandler(evt) {
-  var touch = evt.changedTouches[0];
-  var target = touch.target || touch.srcElement;
-  if (target.id.startsWith('marker') || adjustment) {
-    var simulatedEvt = document.createEvent('MouseEvent');
-    simulatedEvt.initMouseEvent(
-      {touchstart: 'mousedown', touchmove: 'mousemove', touchend: 'mouseup'}[evt.type],
-      true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY,
-      false, false, false, false, 0, null
-    );
-    touch.target.dispatchEvent(simulatedEvt);
-    evt.preventDefault();
-  }
-}
-
 function setupCanvases() {
   overlay(ID_CVS_FROM, ID_IMG_FROM, BORDER_SIZE);
   overlay(ID_CVS_TO, ID_IMG_TO, BORDER_SIZE);
@@ -436,9 +420,7 @@ function setupMarkers() {
     relevHeight = relevImg.clientHeight;
     relevMarkerNo = parseInt(target.id.match(/\d+$/)[0], 10);
     relevPos = findPosition(relevImg);
-    document.addEventListener('mousemove', doMarkerAdjustment);
-    document.addEventListener('touchmove', touchHandler, true);
-    adjustment = true;
+    $('#marker' + relevMarkerNo).addClass('glow');
     return false;
   }
 
@@ -461,13 +443,49 @@ function setupMarkers() {
   }
 
   function finishMarkerAdjustment(evt) {
-    adjustment = false;
-    document.removeEventListener('mousemove', doMarkerAdjustment);
-    document.removeEventListener('touchmove', touchHandler);
+    $('#marker' + relevMarkerNo).removeClass('glow');
+    relevMarkerNo = null;
   }
 
-  document.onmousedown = launchMarkerAdjustment;
-  document.onmouseup   = finishMarkerAdjustment;
+  /*
+   * Mouse handlers.
+   */
+
+  function launchMouseAdjustment(evt) {
+    if (typeof launchMarkerAdjustment(evt) !== 'undefined') {
+      document.addEventListener('mousemove', doMarkerAdjustment);
+    }
+  }
+
+  function finishMouseAdjustment(evt) {
+    document.removeEventListener('mousemove', doMarkerAdjustment);
+    finishMarkerAdjustment(evt);
+  }
+
+  /*
+   * Touch handlers.
+   */
+
+  function launchTouchAdjustment(evt) {
+    var touch = evt.changedTouches[0];
+    if (typeof launchMarkerAdjustment(touch) !== 'undefined') {
+      evt.preventDefault();
+    }
+  }
+
+  function finishTouchAdjustment(evt) {
+    if (relevMarkerNo !== null) {
+      var touch = evt.changedTouches[0];
+      doMarkerAdjustment(touch);
+      finishMarkerAdjustment(touch);
+      evt.preventDefault();
+    }
+  }
+
+  document.onmousedown = launchMouseAdjustment;
+  document.onmouseup   = finishMouseAdjustment;
+  document.addEventListener('touchstart', launchTouchAdjustment, true);
+  document.addEventListener('touchend',   finishTouchAdjustment, true);
 }
 
 function setupExample() {
@@ -480,12 +498,6 @@ function setupExample() {
       }
     }).open();
   });
-}
-
-function setupTouchHandler() {
-  document.addEventListener('touchstart',  touchHandler, true);
-  document.addEventListener('touchend',    touchHandler, true);
-  document.addEventListener('touchcancel', touchHandler, true);
 }
 
 function setupModalClose() {
@@ -513,7 +525,6 @@ $(window).on('load', function() {
   setupImageSwitching();
   setupImageConfirm();
   setupExample();
-  setupTouchHandler();
   setupModalClose();
   setupGoButtons();
 });
