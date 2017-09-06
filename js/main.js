@@ -8,6 +8,7 @@ var markerMagic  = 0;
 var points       = {};
 var inv          = {}; // marker ID # --> index in respective `points` array
 var relevId      = ID_IMG_FROM;
+var adjustment   = false;
 var relevCtx, relevWidth, relevHeight, relevMarkerNo, relevPos;
 var cropper;
 
@@ -261,18 +262,19 @@ function doMorph() {
   }, 0);
 }
 
-/*
- * Source: https://stackoverflow.com/a/6362527
- */
 function touchHandler(evt) {
   var touch = evt.changedTouches[0];
-  var simulatedEvt = document.createEvent('MouseEvent');
-  simulatedEvt.initMouseEvent(
-    {touchstart: 'mousedown', touchmove: 'mousemove', touchend: 'mouseup'}[evt.type],
-    true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY,
-    false, false, false, false, 0, null
-  );
-  touch.target.dispatchEvent(simulatedEvt);
+  var target = touch.target || touch.srcElement;
+  if (target.id.startsWith('marker') || adjustment) {
+    var simulatedEvt = document.createEvent('MouseEvent');
+    simulatedEvt.initMouseEvent(
+      {touchstart: 'mousedown', touchmove: 'mousemove', touchend: 'mouseup'}[evt.type],
+      true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY,
+      false, false, false, false, 0, null
+    );
+    touch.target.dispatchEvent(simulatedEvt);
+    evt.preventDefault();
+  }
 }
 
 function setupCanvases() {
@@ -435,6 +437,8 @@ function setupMarkers() {
     relevMarkerNo = parseInt(target.id.match(/\d+$/)[0], 10);
     relevPos = findPosition(relevImg);
     document.addEventListener('mousemove', doMarkerAdjustment);
+    document.addEventListener('touchmove', touchHandler, true);
+    adjustment = true;
     return false;
   }
 
@@ -457,7 +461,9 @@ function setupMarkers() {
   }
 
   function finishMarkerAdjustment(evt) {
+    adjustment = false;
     document.removeEventListener('mousemove', doMarkerAdjustment);
+    document.removeEventListener('touchmove', touchHandler);
   }
 
   document.onmousedown = launchMarkerAdjustment;
@@ -476,12 +482,8 @@ function setupExample() {
   });
 }
 
-/*
- * Source: https://stackoverflow.com/a/6362527
- */
 function setupTouchHandler() {
   document.addEventListener('touchstart',  touchHandler, true);
-  document.addEventListener('touchmove',   touchHandler, true);
   document.addEventListener('touchend',    touchHandler, true);
   document.addEventListener('touchcancel', touchHandler, true);
 }
