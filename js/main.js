@@ -261,6 +261,21 @@ function doMorph() {
   }, 0);
 }
 
+/*
+ * Source: https://stackoverflow.com/a/6362527
+ */
+function touchHandler(evt) {
+  var touch = evt.changedTouches[0];
+  var simulatedEvt = document.createEvent('MouseEvent');
+  simulatedEvt.initMouseEvent(
+    {touchstart: 'mousedown', touchmove: 'mousemove', touchend: 'mouseup'}[evt.type],
+    true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY,
+    false, false, false, false, 0, null
+  );
+  touch.target.dispatchEvent(simulatedEvt);
+  evt.preventDefault();
+}
+
 function setupCanvases() {
   overlay(ID_CVS_FROM, ID_IMG_FROM, BORDER_SIZE);
   overlay(ID_CVS_TO, ID_IMG_TO, BORDER_SIZE);
@@ -299,6 +314,7 @@ function setupImageUploads() {
       $('#' + ID_CONFIRM_CROP_BTN).addClass('gold');
       $('#' + ID_CONFIRM_CROP_BTN).css('display', 'inline-block');
       $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
+      $('#' + ID_CROP_INSTRS).css('display', 'inline');
     };
 
     if (file) {
@@ -319,6 +335,7 @@ function setupImageUploads() {
     $('#' + ID_CONFIRM_CROP_BTN).removeClass('gold');
     $('#' + ID_UPLOAD_BTN).css('display', 'inline-block');
     $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
+    $('#' + ID_CROP_INSTRS).css('display', 'none');
   });
 }
 
@@ -460,6 +477,16 @@ function setupExample() {
   });
 }
 
+/*
+ * Source: https://stackoverflow.com/a/6362527
+ */
+function setupTouchHandler() {
+  document.addEventListener('touchstart',  touchHandler, true);
+  document.addEventListener('touchmove',   touchHandler, true);
+  document.addEventListener('touchend',    touchHandler, true);
+  document.addEventListener('touchcancel', touchHandler, true);
+}
+
 function setupModalClose() {
   var doClose = function(evt) {
     evt.preventDefault();
@@ -485,6 +512,7 @@ $(window).on('load', function() {
   setupImageSwitching();
   setupImageConfirm();
   setupExample();
+  setupTouchHandler();
   setupModalClose();
   setupGoButtons();
 });

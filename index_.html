@@ -46,6 +46,10 @@
           <input type="file" id="upload" />
           <button class="pure-button orange top-sm right-sm" id="change-image">Change image</button>
           <button class="pure-button pure-button-primary top-sm" id="confirm-image">Confirm image</button>
+          <span id="crop-instructions">
+            <br /><br />
+            <span class="smalltext">Scroll to zoom, then reposition the image and hit "confirm crop."</span>
+          </span>
         </figcaption>
       </td>
       <td id="images-td-right">
@@ -68,7 +72,6 @@
     </tr></table>
     <canvas id="canvas-from"></canvas>
     <canvas id="canvas-to"></canvas>
-    <div id="camera"></div>
 
     <div class="column tac top-10">
       <div class="go-space"></div>
@@ -84,7 +87,7 @@
     </div>
 
     <div class="column tac top-20">
-      <a href="https://www.spliced.world/">back to main site</a>
+      <a href="https://www.spliced.world/">back to main site</a> / <a href="https://github.com/ohjay/spliced">source</a>
     </div>
     
     <div id="closing-space"></div>

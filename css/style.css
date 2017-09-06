@@ -129,6 +129,10 @@ td#images-td-right {
   background: #ffde00;
 }
 
+.smalltext {
+  font-size: 0.85em;
+}
+
 #title {
   width: 600px;
   height: 211px;
@@ -159,10 +163,6 @@ td#images-td-right {
   display: none;
 }
 
-#safari-warning {
-  font-size: 0.85em;
-}
-
 #animal-selection img {
   opacity: 1.0;
   cursor: pointer;
@@ -179,7 +179,7 @@ td#images-td-right {
   line-height: 1.6em;
 }
 
-#canvas-from, #canvas-to, #camera {
+#canvas-from, #canvas-to, #crop-instructions {
   display: none;
 }
 
