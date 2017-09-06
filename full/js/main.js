@@ -254,7 +254,7 @@ function doMorph() {
     var modal = null;
     if (morph) {
       fillOutputCanvas(morph, cvs, width, height);
-      var modal = new Custombox.modal({
+      modal = new Custombox.modal({
         content: {
           effect: 'fadein',
           target: '#' + ID_OUTPUT_MODAL,
@@ -318,7 +318,7 @@ function setupImageUploads() {
       $('#' + ID_CONFIRM_CROP_BTN).css('display', 'inline-block');
       $('#' + ID_TAKE_PICTURE_BTN).addClass('pure-button-disabled');
       $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
-    }
+    };
 
     if (file) {
       reader.readAsDataURL(file);
@@ -378,7 +378,7 @@ function setupAnimalSelection() {
         removeAllMarkers(true); // it says "all", but it's only the destination points
         drawPointsFromFile(ID_IMG_TO, getPointsFilepath(ID_IMG_TO), false);
       }
-    }
+    };
   }
 }
 
@@ -423,7 +423,7 @@ function setupImageConfirm() {
       for (i = 0; i < buttons.length; ++i) {
         $(buttons[i]).removeClass('pure-button-disabled');
       }
-    }
+    };
 
     // Create "from" points
     points[ID_IMG_FROM] = [];
@@ -440,7 +440,7 @@ function setupImageConfirm() {
 function setupMarkers() {
   function launchMarkerAdjustment(evt) {
     if (!evt) {
-      var evt = window.event;
+      evt = window.event;
     }
     var target = evt.target || evt.srcElement;
     if (!target.id.startsWith('marker')) {
@@ -460,9 +460,8 @@ function setupMarkers() {
 
   function doMarkerAdjustment(evt) {
     if (!evt) {
-      var evt = window.event;
+      evt = window.event;
     }
-    var target = evt.target || evt.srcElement;
     var inImgCoords = [
       evt.pageX - relevPos[0],
       evt.pageY - relevPos[1]

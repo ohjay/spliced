@@ -30,7 +30,8 @@ function getMidpoints(pointsFrom, pointsTo, t) {
   return midpoints;
 }
 
-function runTriangulation(points, warpFrac, corners=true) {
+function runTriangulation(points, warpFrac, corners) {
+  corners = (typeof corners === 'undefined') ? true : corners;
   // Add the corner points before triangulating
   if (corners) {
     addCornerPoints(points, ID_IMG_FROM);
