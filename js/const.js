@@ -14,7 +14,6 @@ const ID_CONTAINER_FROM   = 'container-img-from';
 const ID_CONFIRM_CROP_BTN = 'confirm-crop';
 const ID_CONFIRM_IMG_BTN  = 'confirm-image';
 const ID_CHANGE_IMG_BTN   = 'change-image';
-const ID_TAKE_PICTURE_BTN = 'take-picture';
 const ID_ANIMAL_SELECTION = 'animal-selection';
 const ID_GO_CONTAINER     = 'go-buttons';
 const ID_EXAMPLE          = 'example';
@@ -23,7 +22,6 @@ const ID_OUTPUT_MODAL     = 'output-modal';
 const ID_DOWNLOAD         = 'download-link';
 const ID_EXAMPLE_CLOSE    = 'example-close';
 const ID_MODAL_CLOSE      = 'modal-close';
-const ID_CAMERA_DIV       = 'camera';
 const ID_LOADER           = 'loader';
 
 const POINTS_DIR              = 'data';

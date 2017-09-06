@@ -124,30 +124,6 @@ function fillOutputCanvas(finalData, cvs, width, height) {
   cvs.style.display = 'block'; // show canvas
 }
 
-function startCamera() {
-  $('#' + ID_CAMERA_DIV).css('display', 'block');
-  Webcam.attach('#' + ID_CAMERA_DIV);
-  $('#' + ID_UPLOAD_BTN).addClass('pure-button-disabled');
-  $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
-  $('#' + ID_TAKE_PICTURE_BTN).addClass('gold');
-  $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', stopCamera);
-}
-
-function stopCamera() {
-  // Take the picture
-  Webcam.snap(function(data_uri, cvs, ctx) {
-    var img = document.getElementById(ID_IMG_FROM);
-    img.src = cvs.toDataURL();
-    Webcam.reset();
-    $('#' + ID_TAKE_PICTURE_BTN).off('click').on('click', startCamera);
-  });
-
-  $('#' + ID_CAMERA_DIV).css('display', 'none');
-  $('#' + ID_TAKE_PICTURE_BTN).removeClass('gold');
-  $('#' + ID_UPLOAD_BTN).removeClass('pure-button-disabled');
-  $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
-}
-
 function computeAuxPoints(cpts) {
   var auxPoints = [];
   
@@ -316,7 +292,6 @@ function setupImageUploads() {
       $('#' + ID_UPLOAD_BTN).css('display', 'none');
       $('#' + ID_CONFIRM_CROP_BTN).addClass('gold');
       $('#' + ID_CONFIRM_CROP_BTN).css('display', 'inline-block');
-      $('#' + ID_TAKE_PICTURE_BTN).addClass('pure-button-disabled');
       $('#' + ID_CONFIRM_IMG_BTN).addClass('pure-button-disabled');
     }
 
@@ -337,23 +312,8 @@ function setupImageUploads() {
     $('#' + ID_CONFIRM_CROP_BTN).css('display', 'none');
     $('#' + ID_CONFIRM_CROP_BTN).removeClass('gold');
     $('#' + ID_UPLOAD_BTN).css('display', 'inline-block');
-    $('#' + ID_TAKE_PICTURE_BTN).removeClass('pure-button-disabled');
     $('#' + ID_CONFIRM_IMG_BTN).removeClass('pure-button-disabled');
   });
-}
-
-function setupCamera() {
-  overlay(ID_CAMERA_DIV, ID_IMG_FROM, BORDER_SIZE);
-  var fromImg = document.getElementById(ID_IMG_FROM);
-  Webcam.set({
-    width: fromImg.clientHeight / 3 * 4, // 4:3 ratio required
-    height: fromImg.clientHeight,
-    crop_width: fromImg.clientWidth,
-    crop_height: fromImg.clientHeight,
-    image_format: 'jpeg',
-    jpeg_quality: 90
-  });
-  $('#' + ID_TAKE_PICTURE_BTN).click(startCamera);
 }
 
 function setupAnimalSelection() {
@@ -393,11 +353,10 @@ function setupImageSwitching() {
       $(buttons[i]).addClass('pure-button-disabled');
     }
     
-    // Remove markers and re-enable upload/camera buttons
+    // Remove markers and re-enable upload button
     removeAllMarkers();
     $('#' + ID_CHANGE_IMG_BTN).css('display', 'none');
     $('#' + ID_CONFIRM_IMG_BTN).css('display', 'inline-block');
-    $('#' + ID_TAKE_PICTURE_BTN).removeClass('pure-button-disabled');
     $('#' + ID_UPLOAD_BTN).removeClass('pure-button-disabled');
   });
 }
@@ -405,7 +364,6 @@ function setupImageSwitching() {
 function setupImageConfirm() {
   $('#' + ID_CONFIRM_IMG_BTN).click(function(evt) {
     $('#' + ID_UPLOAD_BTN).addClass('pure-button-disabled');
-    $('#' + ID_TAKE_PICTURE_BTN).addClass('pure-button-disabled');
     $('#' + ID_CONFIRM_IMG_BTN).css('display', 'none');
     $('#' + ID_CHANGE_IMG_BTN).css('display', 'inline-block');
     
@@ -518,7 +476,6 @@ function setupGoButtons() {
 $(window).on('load', function() {
   setupCanvases();
   setupImageUploads();
-  setupCamera();
   setupAnimalSelection();
   setupImageSwitching();
   setupImageConfirm();

@@ -1,5 +1,5 @@
 # Splice Yourself
-face morphing in javascript<br />
+face morphing in javascript:<br />
 book website for [jon mcgoran](http://www.jonmcgoran.com/)'s _spliced_
 
 official site [here](http://spliceyourself.spliced.world/)<br />
