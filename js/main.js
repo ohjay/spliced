@@ -273,7 +273,6 @@ function touchHandler(evt) {
     false, false, false, false, 0, null
   );
   touch.target.dispatchEvent(simulatedEvt);
-  evt.preventDefault();
 }
 
 function setupCanvases() {
