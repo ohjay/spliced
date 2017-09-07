@@ -409,7 +409,8 @@ function setupMarkers() {
       evt = window.event;
     }
     var target = evt.target || evt.srcElement;
-    if (!target.id.startsWith('marker')) {
+    var targetMarkerNo = parseInt(target.id.match(/\d+$/)[0], 10);
+    if (!target.id.startsWith('marker') || targetMarkerNo >= markerMagic) {
       return;
     }
 
@@ -418,7 +419,7 @@ function setupMarkers() {
     var relevImg = document.getElementById(relevId);
     relevWidth  = relevImg.clientWidth;
     relevHeight = relevImg.clientHeight;
-    relevMarkerNo = parseInt(target.id.match(/\d+$/)[0], 10);
+    relevMarkerNo = targetMarkerNo;
     relevPos = findPosition(relevImg);
     $('#marker' + relevMarkerNo).addClass('glow');
     return false;
@@ -452,9 +453,11 @@ function setupMarkers() {
    */
 
   function launchMouseAdjustment(evt) {
-    if (typeof launchMarkerAdjustment(evt) !== 'undefined') {
+    var retval = launchMarkerAdjustment(evt);
+    if (relevMarkerNo !== null) {
       document.addEventListener('mousemove', doMarkerAdjustment);
     }
+    return retval;
   }
 
   function finishMouseAdjustment(evt) {
@@ -466,26 +469,22 @@ function setupMarkers() {
    * Touch handlers.
    */
 
-  function launchTouchAdjustment(evt) {
+  function handleTouchAdjustment(evt) {
     var touch = evt.changedTouches[0];
-    if (typeof launchMarkerAdjustment(touch) !== 'undefined') {
-      evt.preventDefault();
-    }
-  }
-
-  function finishTouchAdjustment(evt) {
     if (relevMarkerNo !== null) {
-      var touch = evt.changedTouches[0];
+      // Place marker
       doMarkerAdjustment(touch);
       finishMarkerAdjustment(touch);
+      evt.preventDefault();
+    } else if (typeof launchMarkerAdjustment(touch) !== 'undefined') {
+      // ^ Select marker
       evt.preventDefault();
     }
   }
 
   document.onmousedown = launchMouseAdjustment;
   document.onmouseup   = finishMouseAdjustment;
-  document.addEventListener('touchstart', launchTouchAdjustment, true);
-  document.addEventListener('touchend',   finishTouchAdjustment, true);
+  document.addEventListener('touchend', handleTouchAdjustment, true);
 }
 
 function setupExample() {
