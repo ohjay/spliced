@@ -33,7 +33,7 @@ function createMarker(id, markerSrc) {
 /*
  * Draw markers for an already-existent array of points.
  */
-function drawMarkers(id, imgPos, magic) {
+function drawMarkers(id, imgPos, magic, callback) {
   magic = (typeof magic === 'undefined') ? false : magic;
   var relevantPoints = points[id];
   var numPoints = relevantPoints.length;
@@ -54,6 +54,9 @@ function drawMarkers(id, imgPos, magic) {
   
   if (magic) {
     markerMagic = currMarkerId;
+  }
+  if (typeof callback !== 'undefined' && callback !== null) {
+    callback();
   }
 }
 
@@ -87,12 +90,15 @@ function unnormalize(points, width, height) {
   });
 }
 
-function drawPointsFromFile(id, filepath, magic) {
+function drawPointsFromFile(id, filepath, magic, callback) {
   magic = (typeof magic === 'undefined') ? false : magic;
   $.getJSON(filepath, function(data) {
     img = document.getElementById(id);
     points[id] = unnormalize(data.points, img.clientWidth, img.clientHeight);
     drawMarkers(id, findPosition(img), magic);
+    if (typeof callback !== 'undefined' && callback !== null) {
+      callback();
+    }
   });
 }
 
@@ -188,14 +194,11 @@ function detectPoints(imgId, callback) {
         }
       }
       points[imgId] = constrain(cpts.concat(aux), img.clientWidth, img.clientHeight);
-      drawMarkers(imgId, findPosition(img), true);
+      drawMarkers(imgId, findPosition(img), true, callback);
     } else {
-      drawPointsFromFile(imgId, DEFAULT_POINTS_FILEPATH, true);
+      drawPointsFromFile(imgId, DEFAULT_POINTS_FILEPATH, true, callback);
     }
     document.removeEventListener('clmtrackrConverged', onConvergence);
-    if (typeof callback !== 'undefined' && callback != null) {
-      callback();
-    }
   };
   document.addEventListener('clmtrackrConverged', onConvergence, false);
   ctracker.start(cvs);
@@ -395,8 +398,7 @@ function setupImageConfirm() {
     points[ID_IMG_FROM] = [];
     var imgFrom = document.getElementById(ID_IMG_FROM);
     if (imgFrom.src.endsWith('chimpanzee.jpg')) {
-      drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true);
-      _finishSetup();
+      drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true, _finishSetup);
     } else {
       detectPoints(ID_IMG_FROM, _finishSetup);
     }
@@ -410,7 +412,7 @@ function setupMarkers() {
     }
     var target = evt.target || evt.srcElement;
     var idMatch = target.id.match(/\d+$/);
-    if (!target.id.startsWith('marker') || idMatch == null) {
+    if (!target.id.startsWith('marker') || idMatch === null) {
       return;
     }
     var targetMarkerNo = parseInt(idMatch[0], 10);
