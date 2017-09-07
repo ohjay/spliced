@@ -409,8 +409,12 @@ function setupMarkers() {
       evt = window.event;
     }
     var target = evt.target || evt.srcElement;
-    var targetMarkerNo = parseInt(target.id.match(/\d+$/)[0], 10);
-    if (!target.id.startsWith('marker') || targetMarkerNo >= markerMagic) {
+    var idMatch = target.id.match(/\d+$/);
+    if (!target.id.startsWith('marker') || idMatch == null) {
+      return;
+    }
+    var targetMarkerNo = parseInt(idMatch[0], 10);
+    if (targetMarkerNo >= markerMagic) {
       return;
     }
 
