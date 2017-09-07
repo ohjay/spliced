@@ -186,7 +186,7 @@ td#images-td-right {
   line-height: 1.6em;
 }
 
-#canvas-from, #canvas-to, #crop-instructions {
+#canvas-from, #canvas-to, #crop-instructions, #marker-instructions {
   display: none;
 }
 

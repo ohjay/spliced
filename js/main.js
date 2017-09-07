@@ -8,6 +8,7 @@ var markerMagic  = 0;
 var points       = {};
 var inv          = {}; // marker ID # --> index in respective `points` array
 var relevId      = ID_IMG_FROM;
+var isMobile     = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 var relevCtx, relevWidth, relevHeight, relevMarkerNo = null, relevPos;
 var cropper;
 
@@ -369,6 +370,9 @@ function setupImageSwitching() {
     $('#' + ID_CHANGE_IMG_BTN).css('display', 'none');
     $('#' + ID_CONFIRM_IMG_BTN).css('display', 'inline-block');
     $('#' + ID_UPLOAD_BTN).removeClass('pure-button-disabled');
+    if (isMobile) {
+      $('#' + ID_MARKER_INSTRS).css('display', 'none');
+    }
   });
 }
 
@@ -401,6 +405,10 @@ function setupImageConfirm() {
       drawPointsFromFile(ID_IMG_FROM, DEFAULT_POINTS_FILEPATH, true, _finishSetup);
     } else {
       detectPoints(ID_IMG_FROM, _finishSetup);
+    }
+    
+    if (isMobile) {
+      $('#' + ID_MARKER_INSTRS).css('display', 'inline');
     }
   });
 }

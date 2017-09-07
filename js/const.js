@@ -11,6 +11,7 @@ const ID_CVS_OUT          = 'canvas-out';
 const ID_UPLOAD           = 'upload';
 const ID_UPLOAD_BTN       = 'button-upload';
 const ID_CROP_INSTRS      = 'crop-instructions';
+const ID_MARKER_INSTRS    = 'marker-instructions';
 const ID_CONTAINER_FROM   = 'container-img-from';
 const ID_CONFIRM_CROP_BTN = 'confirm-crop';
 const ID_CONFIRM_IMG_BTN  = 'confirm-image';
