@@ -173,7 +173,12 @@ function computeMidpointImage(midpoints, triangles, fromData, toData,
     A1 = computeAffine(Y, X1);
     transfs.push([A0, A1]);
     
-    midCoords = triangleInterior(targetTri);
+    try {
+      midCoords = triangleInterior(targetTri);
+    } catch(err) {
+      console.log(err);
+      return false;
+    }
     if (midCoords.length == 0) {
       return false;  // signal failure / to redo point positioning
     }
@@ -207,20 +212,25 @@ function computeMidpointImage(midpoints, triangles, fromData, toData,
       
       for (j = 0; j < numTriangles; ++j) {
         targetTri = targetTriangles[j];
-        if (Delaunay.contains(targetTri, [xfl, yfl], 0.05)) {
-          warpedSrc0 = math.multiply(transfs[j][0], [[xfl], [yfl], [1]]);
-          warpedSrc1 = math.multiply(transfs[j][1], [[xfl], [yfl], [1]]);
+        try {
+          if (Delaunay.contains(targetTri, [xfl, yfl], 0.05)) {
+            warpedSrc0 = math.multiply(transfs[j][0], [[xfl], [yfl], [1]]);
+            warpedSrc1 = math.multiply(transfs[j][1], [[xfl], [yfl], [1]]);
           
-          src0X = warpedSrc0[0][0].clip(0, width  - 1);
-          src0Y = warpedSrc0[1][0].clip(0, height - 1);
-          src1X = warpedSrc1[0][0].clip(0, width  - 1);
-          src1Y = warpedSrc1[1][0].clip(0, height - 1);
+            src0X = warpedSrc0[0][0].clip(0, width  - 1);
+            src0Y = warpedSrc0[1][0].clip(0, height - 1);
+            src1X = warpedSrc1[0][0].clip(0, width  - 1);
+            src1Y = warpedSrc1[1][0].clip(0, height - 1);
           
-          src0Color = bilerp(src0X, src0Y, fromData, width, height);
-          src1Color = bilerp(src1X, src1Y, toData,   width, height);
+            src0Color = bilerp(src0X, src0Y, fromData, width, height);
+            src1Color = bilerp(src1X, src1Y, toData,   width, height);
           
-          colorPixel(finalData, i - 3, src0Color, src1Color, df0, df1);
-          break;
+            colorPixel(finalData, i - 3, src0Color, src1Color, df0, df1);
+            break;
+          }
+        } catch(err) {
+          console.log(err);
+          return false;
         }
       }
     }
